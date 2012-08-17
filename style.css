@@ -1,0 +1,42 @@
+#boxes .content-pad{padding-bottom: 5px}
+
+#boxes {margin:0;}
+
+#boxes .grid-element{margin-bottom:0;}
+
+#boxes .fbox{
+height:181px;
+border-radius: 15px;
+overflow: hidden;
+}
+
+#boxes .imagecontainer{
+background-repeat:no-repeat;
+background-size:cover;
+background-position:center center;
+height:181px;
+border-radius: 15px;
+}
+
+#boxes .fbox a{
+position:relative;
+display:block;
+padding:5px;
+padding-top:126px;
+top:-241px;
+height:50px;
+color:#FFF;
+line-height:1.2em;
+text-shadow: 1px 1px #000;
+overflow: hidden;
+border-radius: 15px;
+}
+
+#boxes .fbox .shading {
+position:relative;
+top:-60px;
+height:60px;
+background-color:hsla(206, 96%, 53%, 0.5);
+border-bottom-left-radius: 15px;
+border-bottom-right-radius: 15px;
+}
