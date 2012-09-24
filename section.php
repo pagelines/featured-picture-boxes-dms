@@ -21,71 +21,102 @@ class FeatPicBoxes extends PageLinesSection {
 			$tab = array(
 				'FeatPicBoxes_setup' => array(
 					'type'		=> 'multi_option', 
-					'title'		=> __('Box Setup Options', 'pagelines'), 
-					'shortexp'	=> __('Basic setup options for handling of boxes.', 'pagelines'),
+					'title'		=> __('Box Setup Options', 'FeatPicBoxes'), 
+					'shortexp'	=> __('Basic setup options for handling of boxes.', 'FeatPicBoxes'),
 					'selectvalues'	=> array(
 						
 						'FeatPicBoxes_set' => array(
 							'default'		=> 'default-boxes',
 							'type' 			=> 'select_taxonomy',
 							'taxonomy_id'	=> $this->taxID,				
-							'inputlabel'	=> __( 'Box Set To Show', 'pagelines'),
+							'inputlabel'	=> __( 'Box Set To Show', 'FeatPicBoxes'),
 						), 
 						'FeatPicBoxes_col_number' => array(
 							'type' 			=> 'count_select',
 							'default'		=> '3',
-							'count_number'	=> '5', 
+							'count_number'	=> '10', 
 							'count_start'	=> '1',
-							'inputlabel' 		=> __( "Boxes Per Row", 'pagelines'),
+							'inputlabel' 		=> __( "Boxes Per Row", 'FeatPicBoxes'),
 						), 
 						'FeatPicBoxes_items' => array(
 							'default'		=> '6',
 							'type' 			=> 'text_small',
 							'size'			=> 'small',
-							'inputlabel' 	=> __( 'Maximum Boxes To Show', 'pagelines'),
+							'inputlabel' 	=> __( 'Maximum Boxes To Show', 'FeatPicBoxes'),
 						),
 					),
 				),
 					
 					'FeatPicBoxes_ordering' => array(
 						'type'		=> 'multi_option', 
-						'title'		=> __('Box Ordering Options', 'pagelines'), 
-						'shortexp'	=> __('Optionally control the ordering of the boxes', 'pagelines'),
-						'exp'		=> __('The easiest way to order boxes is using a post type order plugin for WordPress. However, if you would like to do it algorithmically, we have provided these options for you.', 'pagelines'),
+						'title'		=> __('Box Ordering Options', 'FeatPicBoxes'), 
+						'shortexp'	=> __('Optionally control the ordering of the boxes', 'FeatPicBoxes'),
+						'exp'		=> __('The easiest way to order boxes is using a post type order plugin for WordPress. However, if you would like to do it algorithmically, we have provided these options for you.', 'FeatPicBoxes'),
 						'selectvalues'	=> array(
 							
 							'FeatPicBoxes_orderby' => array(
 								'type'			=> 'select',
 								'default'		=> 'ID',
-								'inputlabel'	=> 'Order Boxes By (If Not With Post Type Order Plugin)',
+								'inputlabel'	=> __('Order Boxes By (If Not With Post Type Order Plugin)', 'FeatPicBoxes'),
 								'selectvalues' => array(
-									'ID' 		=> array('name' => __( 'Post ID (default)', 'pagelines') ),
-									'title' 	=> array('name' => __( 'Title', 'pagelines') ),
-									'date' 		=> array('name' => __( 'Date', 'pagelines') ),
-									'modified' 	=> array('name' => __( 'Last Modified', 'pagelines') ),
-									'rand' 		=> array('name' => __( 'Random', 'pagelines') ),							
+									'ID' 		=> array('name' => __( 'Post ID (default)', 'FeatPicBoxes') ),
+									'title' 	=> array('name' => __( 'Title', 'FeatPicBoxes') ),
+									'date' 		=> array('name' => __( 'Date', 'FeatPicBoxes') ),
+									'modified' 	=> array('name' => __( 'Last Modified', 'FeatPicBoxes') ),
+									'rand' 		=> array('name' => __( 'Random', 'FeatPicBoxes') ),							
 								)
 							),
 							'FeatPicBoxes_order' => array(
 									'default' => 'DESC',
 									'type' => 'select',
 									'selectvalues' => array(
-										'DESC' 		=> array('name' => __( 'Descending', 'pagelines') ),
-										'ASC' 		=> array('name' => __( 'Ascending', 'pagelines') ),
+										'DESC' 		=> array('name' => __( 'Descending', 'FeatPicBoxes') ),
+										'ASC' 		=> array('name' => __( 'Ascending', 'FeatPicBoxes') ),
 									),
-									'inputlabel'=> __( 'Select sort order', 'pagelines'),
+									'inputlabel'=> __( 'Select sort order', 'FeatPicBoxes'),
 							),
 						),
 					),
-					
+					'FeatPicBoxes_defaultImage'     => array(
+						'type'             => 'image_upload',
+						'inputlabel'    => __('Default image', 'FeatPicBoxes'),
+						'title'         => __('Replace the default image for boxes and posts without them (optional)', 'FeatPicBoxes'),
+						'shortexp'        => __('Whenever a post or box is displayed that dosnt have its own image specified this will be used instead.', 'FeatPicBoxes'),
+                ),
 					'FeatPicBoxes_class' => array(
 						'default'		=> '',
 						'type' 			=> 'text',
 						'size'			=> 'small',
-						'inputlabel' 	=> __( 'Add custom css class to these boxes', 'pagelines'),
-						'title' 		=> __( 'Custom CSS class', 'pagelines'),
-						'shortexp' 		=> __( 'Add a custom CSS class to this set of boxes.', 'pagelines'),
-					)
+						'inputlabel' 	=> __( 'Add custom css class to these boxes', 'FeatPicBoxes'),
+						'title' 		=> __( 'Custom CSS class', 'FeatPicBoxes'),
+						'shortexp' 		=> __( 'Add a custom CSS class to this set of boxes.', 'FeatPicBoxes'),
+					),
+					
+				'FeatPicBoxes_source' => array(
+						'type'		=> 'multi_option', 
+						'title'		=> __('Boxes Source and Order (Advanced)', 'FeatPicBoxes'), 
+						'shortexp'	=> __('Advanced options for box sources and their order.', 'FeatPicBoxes'),
+						'selectvalues'	=> array(
+							'FeatPicBoxes_source'	=> array(
+									'default'	=> 'boxes',
+									'version'	=> 'pro',
+									'type'		=> 'select',
+									'selectvalues' 		=> array(
+										'boxes' 	=> array('name' => __( 'Box Posts (custom post type)', 'FeatPicBoxes' ) ),
+										'post_cat' 		=> array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
+										'post' 	=> array('name' => __( 'Use all Posts', 'FeatPicBoxes' ) ),
+									),
+									'inputlabel'	=> __( 'Select Feature Post Source (Optional - Defaults to Custom Post Type)', 'FeatPicBoxes' ),
+								),
+							'FeatPicBoxes_category'		=> array(
+									'default'		=> 1,
+									'version'		=> 'pro',
+									'type'			=> 'select',
+									'selectvalues'	=> $this->get_cats(),
+									'inputlabel'	=> __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
+								),
+						)
+				)
 			);
 		
 			$tab_settings = array(
@@ -98,7 +129,17 @@ class FeatPicBoxes extends PageLinesSection {
 
 			register_metatab($tab_settings, $tab);
 	}
-
+	
+	function get_cats() {
+	
+		$cats = get_categories();
+		foreach( $cats as $cat )
+			$categories[ $cat->cat_ID ] = array( 'name' => $cat->name );
+			
+		return ( isset( $categories) ) ? $categories : array();
+	}
+	
+	
 	/**
 	* Section template.
 	*/
@@ -112,6 +153,8 @@ class FeatPicBoxes extends PageLinesSection {
 			$this->thumb_size = ploption('FeatPicBoxes_thumb_size', $this->oset);
 			$this->framed = ploption('FeatPicBoxes_thumb_frame', $this->oset);
 			
+			$post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
+			$post_category = ( ploption( 'FeatPicBoxes_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_category', $this->oset ) : null;
 			
 			$class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
 			
@@ -119,12 +162,25 @@ class FeatPicBoxes extends PageLinesSection {
 			// Set up the query for this page
 				$orderby = ( ploption('FeatPicBoxes_orderby', $this->oset) ) ? ploption('FeatPicBoxes_orderby', $this->oset) : 'ID';
 				$order = ( ploption('FeatPicBoxes_order', $this->oset) ) ? ploption('FeatPicBoxes_order', $this->oset) : 'DESC';
-				$params = array( 'orderby'	=> $orderby, 'order' => $order, 'post_type'	=> $this->ptID );
+				$params = array( 'orderby'	=> $orderby, 'order' => $order);
+				
 				$params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
-				$params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;
+				
+				if ($post_source == 'post_cat') {
+					$params[ 'post_type' ] = 'post';
+					$params[ 'cat' ] = $post_category;
+				}
+				else {$params[ 'post_type' ] = $post_source;}
+				
+				if ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
+				
 				$params[ 'no_found_rows' ] = 1;
 
 				$q = new WP_Query( $params );
+				
+				//var_dump($params); // debug
+				//print "<br><br>";
+				//var_dump($q);
 				
 				if(empty($q->posts)){
 					echo setup_section_notify( $this, 'Add Box Posts To Activate.', admin_url('edit.php?post_type='.$this->ptID), 'Add Posts' );
@@ -138,46 +194,43 @@ class FeatPicBoxes extends PageLinesSection {
 				printf('<div class="fboxes fix">%s</div>', grid( $q, $args ));
 		
 	}
-
+	
 	function draw_boxes($p, $args){ 
-
 		setup_postdata($p); 
+		
+		$post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
+		$default_image = ( ploption( 'FeatPicBoxes_defaultImage', $this->oset ) ) ? ploption( 'FeatPicBoxes_defaultImage', $this->oset ) : 'boxes';
 		
 		$oset = array('post_id' => $p->ID);
 	 	$box_link = plmeta('the_box_icon_link', $oset);
 		$box_icon = plmeta('the_box_icon', $oset);
 		
+		if ($post_source == 'post_cat' || $post_source == 'post') {
+			if ( has_post_thumbnail( $p->ID ) ) {
+				$box_icon = wp_get_attachment_image_src( get_post_thumbnail_id( $p->ID ), 'single-post-thumbnail'  );
+				$box_icon = $box_icon[0]; // just the URL
+				}
+			else { $box_icon = null; }
+			}
+			
+		if ($box_icon == null){ $box_icon = $this->base_url.'/images/default-image.png';}
+		
 		$class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null;
 		
 		$title_text = ($box_link) ? sprintf('<a href="%s">%s</a>', $box_link, $p->post_title ) : $p->post_title; 
 	
-		$title = do_shortcode(sprintf('<div class="fboxtitle"><h3>%s</h3></div>', $title_text));
+		$title = do_shortcode(sprintf('<div class="featpicbox-shading"><h3>%s</h3></div>', $title_text));
 				
 		return sprintf('
 		<div class="featpicbox-dummy"></div>
 		<div id="%s" class="fbox %s">
 			<div class="featpicbox-image" style="background-image:url(\'%s\');">
-				<div class="featpicbox-shading">%s</div>
+				%s
 			</div>
-		</div>', 'fbox_'.$p->ID, $class, $box_icon, $title_text);
+		</div>', 'fbox_'.$p->ID, $class, $box_icon, $title);
 	
 	}
 	
-	function column_display($column){
-		global $post;
 
-		switch ($column){
-			case 'bdescription':
-				the_excerpt();
-				break;
-			case 'bmedia':
-				if(get_post_meta($post->ID, 'the_box_icon', true ))
-					echo '<img src="'.get_post_meta($post->ID, 'the_box_icon', true ).'" style="max-width: 80px; margin: 10px; border: 1px solid #ccc; padding: 5px; background: #fff" />';	
 	
-				break;
-			case $this->taxID:
-				echo get_the_term_list($post->ID, 'box-sets', '', ', ','');
-				break;
-		}
-	}
 }
