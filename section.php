@@ -14,87 +14,31 @@ class FeatPicBoxes extends PageLinesSection {
 	var $taxID = 'box-sets';
 	var $ptID = 'boxes';
 
-	
-	function post_meta_setup(){
-		
-			$type_meta_array = array(
-				
-				'FeatPicBoxes_setup' => array(
-					'type'		=> 'multi_option', 
-					'title'		=> __('Individual Box Options', 'pagelines'), 
-					'shortexp'	=> __('Basic setup options for handling of this box', 'pagelines'),
-					'selectvalues'	=> array(
-						
-						'FeatPicBoxes_box_icon' 		=> array(
-								'type' 		=> 'image_upload',					
-								'inputlabel' 	=> __( 'Box Image', 'pagelines'),
-							), 
-						'FeatPicBoxes_box_icon_link'		=> array(
-								'type' => 'text',					
-								'inputlabel' => __( 'Box Link (Optional)', 'pagelines'),
-							), 
-						'FeatPicBoxes_box_icon_target'		=> array(
-								'type' => 'check',					
-								'inputlabel' => __( 'Open link in New Window?', 'pagelines'),
-							),
-						'FeatPicBoxes_class' => array(
-							'default'		=> '',
-							'type' 			=> 'text',
-							'size'			=> 'small',
-							'inputlabel' 	=> __( 'Boxes Custom Class', 'pagelines'),
-						),
-					),
-				),
-			
-			);
-
-			$post_types = array($this->id); 
-			
-			$type_metapanel_settings = array(
-					'id' 		=> 'boxes-metapanel',
-					'name' 		=> THEMENAME.' Box Options',
-					'posttype' 	=> $post_types,
-				);
-			
-			global $boxes_meta_panel;
-			
-			$boxes_meta_panel =  new PageLinesMetaPanel( $type_metapanel_settings );
-			
-			$type_metatab_settings = array(
-				'id' 		=> 'boxes-type-metatab',
-				'name' 		=> 'Box Setup Options',
-				'icon' 		=> $this->icon,
-			);
-
-			$boxes_meta_panel->register_tab( $type_metatab_settings, $type_meta_array );
-		
-	}
-
 	function section_optionator( $settings ){
 		
 		$settings = wp_parse_args($settings, $this->optionator_default);
 		
 			$tab = array(
-				'box_setup' => array(
+				'FeatPicBoxes_setup' => array(
 					'type'		=> 'multi_option', 
 					'title'		=> __('Box Setup Options', 'pagelines'), 
 					'shortexp'	=> __('Basic setup options for handling of boxes.', 'pagelines'),
 					'selectvalues'	=> array(
 						
-						'box_set' => array(
+						'FeatPicBoxes_set' => array(
 							'default'		=> 'default-boxes',
 							'type' 			=> 'select_taxonomy',
 							'taxonomy_id'	=> $this->taxID,				
 							'inputlabel'	=> __( 'Box Set To Show', 'pagelines'),
 						), 
-						'box_col_number' => array(
+						'FeatPicBoxes_col_number' => array(
 							'type' 			=> 'count_select',
 							'default'		=> '3',
 							'count_number'	=> '5', 
 							'count_start'	=> '1',
 							'inputlabel' 		=> __( "Boxes Per Row", 'pagelines'),
 						), 
-						'box_items' => array(
+						'FeatPicBoxes_items' => array(
 							'default'		=> '6',
 							'type' 			=> 'text_small',
 							'size'			=> 'small',
@@ -103,14 +47,14 @@ class FeatPicBoxes extends PageLinesSection {
 					),
 				),
 					
-					'box_ordering' => array(
+					'FeatPicBoxes_ordering' => array(
 						'type'		=> 'multi_option', 
 						'title'		=> __('Box Ordering Options', 'pagelines'), 
 						'shortexp'	=> __('Optionally control the ordering of the boxes', 'pagelines'),
 						'exp'		=> __('The easiest way to order boxes is using a post type order plugin for WordPress. However, if you would like to do it algorithmically, we have provided these options for you.', 'pagelines'),
 						'selectvalues'	=> array(
 							
-							'box_orderby' => array(
+							'FeatPicBoxes_orderby' => array(
 								'type'			=> 'select',
 								'default'		=> 'ID',
 								'inputlabel'	=> 'Order Boxes By (If Not With Post Type Order Plugin)',
@@ -122,7 +66,7 @@ class FeatPicBoxes extends PageLinesSection {
 									'rand' 		=> array('name' => __( 'Random', 'pagelines') ),							
 								)
 							),
-							'box_order' => array(
+							'FeatPicBoxes_order' => array(
 									'default' => 'DESC',
 									'type' => 'select',
 									'selectvalues' => array(
@@ -134,7 +78,7 @@ class FeatPicBoxes extends PageLinesSection {
 						),
 					),
 					
-					'box_class' => array(
+					'FeatPicBoxes_class' => array(
 						'default'		=> '',
 						'type' 			=> 'text',
 						'size'			=> 'small',
@@ -161,23 +105,23 @@ class FeatPicBoxes extends PageLinesSection {
    function section_template( $clone_id = null ) {    
 		
 		// Options
-			$per_row = ( ploption( 'box_col_number', $this->oset) ) ? ploption( 'box_col_number', $this->oset) : 3; 
-			$box_set = ( ploption( 'box_set', $this->oset ) ) ? ploption( 'box_set', $this->oset ) : null;
-			$box_limit = ploption( 'box_items', $this->oset );
-			$this->thumb_type = ( ploption( 'box_thumb_type', $this->oset) ) ? ploption( 'box_thumb_type', $this->oset) : 'inline_thumbs';	
-			$this->thumb_size = ploption('box_thumb_size', $this->oset);
-			$this->framed = ploption('box_thumb_frame', $this->oset);
+			$per_row = ( ploption( 'FeatPicBoxes_col_number', $this->oset) ) ? ploption( 'FeatPicBoxes_col_number', $this->oset) : 3; 
+			$box_set = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;
+			$box_limit = ploption( 'FeatPicBoxes_items', $this->oset );
+			$this->thumb_type = ( ploption( 'FeatPicBoxes_thumb_type', $this->oset) ) ? ploption( 'FeatPicBoxes_thumb_type', $this->oset) : 'inline_thumbs';	
+			$this->thumb_size = ploption('FeatPicBoxes_thumb_size', $this->oset);
+			$this->framed = ploption('FeatPicBoxes_thumb_frame', $this->oset);
 			
 			
 			$class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
 			
 		// Actions	
 			// Set up the query for this page
-				$orderby = ( ploption('box_orderby', $this->oset) ) ? ploption('box_orderby', $this->oset) : 'ID';
-				$order = ( ploption('box_order', $this->oset) ) ? ploption('box_order', $this->oset) : 'DESC';
+				$orderby = ( ploption('FeatPicBoxes_orderby', $this->oset) ) ? ploption('FeatPicBoxes_orderby', $this->oset) : 'ID';
+				$order = ( ploption('FeatPicBoxes_order', $this->oset) ) ? ploption('FeatPicBoxes_order', $this->oset) : 'DESC';
 				$params = array( 'orderby'	=> $orderby, 'order' => $order, 'post_type'	=> $this->ptID );
-				$params[ 'showposts' ] = ( ploption('box_items', $this->oset) ) ? ploption('box_items', $this->oset) : $per_row;
-				$params[ $this->taxID ] = ( ploption( 'box_set', $this->oset ) ) ? ploption( 'box_set', $this->oset ) : null;
+				$params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
+				$params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;
 				$params[ 'no_found_rows' ] = 1;
 
 				$q = new WP_Query( $params );
@@ -217,35 +161,6 @@ class FeatPicBoxes extends PageLinesSection {
 			</div>
 		</div>', 'fbox_'.$p->ID, $class, $box_icon, $title_text);
 	
-	}
-
-	function _get_box_image( $bpost, $box_icon, $box_link = false, $box_thumb_size = false, $box_target){
-			global $pagelines_ID;
-			
-			$frame = ($this->framed) ? 'pl-imageframe' : '';
-			
-			if($this->thumb_type == 'inline_thumbs'){
-				$max_width = ($box_thumb_size) ? $box_thumb_size : 65;
-				$image_style = 'max-width: 100%';
-				$wrapper_style = sprintf('width: 22%%; max-width:%dpx', $max_width);
-				$wrapper_class = sprintf('fboxgraphic img %s', $frame);
-			} else {
-				$max_width = ($box_thumb_size) ? $box_thumb_size.'px' : '100%';
-				$image_style = 'max-width: 100%';
-				$wrapper_style = sprintf('max-width:%s', $max_width);
-				$wrapper_class = sprintf('fboxgraphic %s', $frame);
-			}
-			
-			// Make the image's tag with url
-			$image_tag = sprintf('<img src="%s" alt="%s" style="%s" />', $box_icon, esc_html($bpost->post_title), $image_style);
-			
-			// If link for box is set, add it
-			$image_output = ( $box_link ) ? sprintf('<a href="%s" title="%s" %s>%s</a>', $box_link, esc_html($bpost->post_title), $box_target, $image_tag ) : $image_tag;
-			
-			$wrapper = sprintf('<div class="%s" style="%s">%s</div>', $wrapper_class, $wrapper_style, $image_output );
-			
-			// Filter output
-			return apply_filters('pl_box_image', $wrapper, $bpost->ID);
 	}
 	
 	function column_display($column){
