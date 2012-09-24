@@ -1,0 +1,41 @@
+// vars to be set in the text
+	@featpicboxShadeHeight:0.25;
+	
+
+#featured-picture-boxes {
+
+	.content-pad{padding-bottom: 5px}
+	
+	.grid-element {
+	display: inline-block;
+    position: relative;
+	
+	.border-radius(5px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	}
+}
+
+.featpicbox-image {
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:center center;
+	// stuff for aspect ratio
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.featpicbox-dummy {margin-top:100%;} // this enables aspect ratio control
+
+.featpicbox-shading {
+
+	margin-top: percentage(1 - @featpicboxShadeHeight);
+	height: percentage(@featpicboxShadeHeight);
+	background-color:hsla(206, 96%, 53%, 0.5);
+	overflow:hidden;
+	.border-radius(5px);
+	.box-sizing(border-box);
+	padding:5px;
+}
