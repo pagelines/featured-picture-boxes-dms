@@ -12,6 +12,8 @@
 	
 	// .border-radius(5px);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	
+	background-color:#FFF; // to allow opactive to shine through
 	}
 }
 
@@ -19,13 +21,25 @@
 	background-repeat:no-repeat;
 	background-size:cover;
 	background-position:center center;
+	
 	// stuff for aspect ratio
 	position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+	
+	// for link - note make mixin based on theme
+	-webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	-o-transition: all 0.4s ease;
+	-ms-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+	
+	&:hover {opacity: 0.6;}
 }
+
+.featpicbox-link {display:block}
 
 .featpicbox-dummy {margin-top:100%;} // this enables aspect ratio control
 

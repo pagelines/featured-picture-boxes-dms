@@ -224,10 +224,12 @@ class FeatPicBoxes extends PageLinesSection {
 		return sprintf('
 		<div class="featpicbox-dummy"></div>
 		<div id="%s" class="fbox %s">
+		<a class="featpicbox-link" href="%s">
 			<div class="featpicbox-image" style="background-image:url(\'%s\');">
 				%s
 			</div>
-		</div>', 'fbox_'.$p->ID, $class, $box_icon, $title);
+		</a>
+		</div>', 'fbox_'.$p->ID, $class, "http://google.co.uk", $box_icon, $title);
 	
 	}
 	
