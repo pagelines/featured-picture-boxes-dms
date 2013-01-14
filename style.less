@@ -1,7 +1,3 @@
-// vars to be set in the text
-	@featpicboxShadeHeight:0.25;
-	
-
 #featured-picture-boxes {
 
 	.content-pad{padding-bottom: 5px}
@@ -41,12 +37,8 @@
 
 .featpicbox-link {display:block}
 
-.featpicbox-dummy {margin-top:100%;} // this enables aspect ratio control
-
 .featpicbox-shading {
 
-	margin-top: percentage(1 - @featpicboxShadeHeight);
-	height: percentage(@featpicboxShadeHeight);
 	background-color:hsla(206, 96%, 53%, 0.5);
 	overflow:hidden;
 	// .border-radius(5px);
@@ -58,3 +50,20 @@
 	h3 {}
 	
 }
+
+// themes
+	// pagelines style
+	.featpicbox-pl-theme {
+	
+		.grid-element{
+			.box-sizing(border-box);
+			margin: 4px;
+		}
+		
+		h3 {
+			color:#FFF;
+			
+			}
+		
+		
+	}

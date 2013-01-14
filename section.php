@@ -11,9 +11,8 @@
 
 class FeatPicBoxes extends PageLinesSection {
 
-	var $taxID = 'box-sets';
-	var $ptID = 'boxes';
-
+	var $taxID = 'feature-sets';
+	
 	function section_optionator( $settings ){
 		
 		$settings = wp_parse_args($settings, $this->optionator_default);
@@ -39,6 +38,38 @@ class FeatPicBoxes extends PageLinesSection {
 							'inputlabel' 		=> __( "Boxes Per Row", 'FeatPicBoxes'),
 						), 
 						'FeatPicBoxes_items' => array(
+							'default'		=> '6',
+							'type' 			=> 'text_small',
+							'size'			=> 'small',
+							'inputlabel' 	=> __( 'Maximum Boxes To Show', 'FeatPicBoxes'),
+						),
+					),
+				),
+				
+				'FeatPicBoxes_themeOptions' => array(
+					'type'		=> 'multi_option', 
+					'title'		=> __('Box Theme Options', 'FeatPicBoxes'), 
+					'shortexp'	=> __('Colour and theme options for the boxes', 'FeatPicBoxes'),
+					'selectvalues'	=> array(
+
+						'FeatPicBoxes_theme' => array(
+								'type'			=> 'select',
+								'default'		=> 'ID',
+								'inputlabel'	=> __('Select a theme (view them here)', 'FeatPicBoxes'),
+								'selectvalues' => array(
+									'normal' 		=> array('name' => __( 'Post ID (default)', 'FeatPicBoxes') ),
+									'other' 	=> array('name' => __( 'Title', 'FeatPicBoxes') ),
+									)
+						), 
+						'FeatPicBoxes_aspectRatio' => array(
+							'default'		=> '1',
+							'type' 			=> 'text_small',
+							'size'			=> 'small',
+							'inputlabel' 	=> __( 'Aspect Ratio', 'FeatPicBoxes'),
+							'shortexp'	=> __('Enter the aspect ration the boxes will maintain. This is the width/height.', 'FeatPicBoxes'),
+							'exp'		=> __('i.e to have the height double that of the width enter 0.5')
+						), 
+						'FeatPicBoxes_color' => array(
 							'default'		=> '6',
 							'type' 			=> 'text_small',
 							'size'			=> 'small',
@@ -143,7 +174,10 @@ class FeatPicBoxes extends PageLinesSection {
 	/**
 	* Section template.
 	*/
-   function section_template( $clone_id = null ) {    
+	
+
+	
+   function section_template( $clone_id = null ) {
 		
 		// Options
 			$per_row = ( ploption( 'FeatPicBoxes_col_number', $this->oset) ) ? ploption( 'FeatPicBoxes_col_number', $this->oset) : 3; 
@@ -152,6 +186,7 @@ class FeatPicBoxes extends PageLinesSection {
 			$this->thumb_type = ( ploption( 'FeatPicBoxes_thumb_type', $this->oset) ) ? ploption( 'FeatPicBoxes_thumb_type', $this->oset) : 'inline_thumbs';	
 			$this->thumb_size = ploption('FeatPicBoxes_thumb_size', $this->oset);
 			$this->framed = ploption('FeatPicBoxes_thumb_frame', $this->oset);
+			
 			
 			$post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
 			$post_category = ( ploption( 'FeatPicBoxes_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_category', $this->oset ) : null;
@@ -167,7 +202,7 @@ class FeatPicBoxes extends PageLinesSection {
 				$params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
 				
 				if ($post_source == 'post_cat') {
-					$params[ 'post_type' ] = 'post';
+					$params[ 'post_type' ] = 'project';
 					$params[ 'cat' ] = $post_category;
 				}
 				else {$params[ 'post_type' ] = $post_source;}
@@ -188,7 +223,7 @@ class FeatPicBoxes extends PageLinesSection {
 				}
 			
 			// Grid Args
-				$args = array( 'per_row' => $per_row, 'callback' => array(&$this, 'draw_boxes'), 'class' => $class );
+				$args = array( 'per_row' => $per_row, 'callback' => array(&$this, 'draw_boxes'), 'class' => $class." "."featpicbox-pl-theme" );
 
 			// Call the Grid
 				printf('<div class="fboxes fix">%s</div>', grid( $q, $args ));
@@ -196,10 +231,15 @@ class FeatPicBoxes extends PageLinesSection {
 	}
 	
 	function draw_boxes($p, $args){ 
-		setup_postdata($p); 
+		setup_postdata($p);
+
+		$aspectRatio = ( ploption( 'FeatPicBoxes_aspect_ratio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
+		
 		
 		$post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
 		$default_image = ( ploption( 'FeatPicBoxes_defaultImage', $this->oset ) ) ? ploption( 'FeatPicBoxes_defaultImage', $this->oset ) : 'boxes';
+		
+		$shading_height = 0.25;
 		
 		$oset = array('post_id' => $p->ID);
 	 	$box_link = plmeta('the_box_icon_link', $oset);
@@ -219,17 +259,19 @@ class FeatPicBoxes extends PageLinesSection {
 		
 		$title_text = ($box_link) ? sprintf('<a href="%s">%s</a>', $box_link, $p->post_title ) : $p->post_title; 
 	
-		$title = do_shortcode(sprintf('<div class="featpicbox-shading"><h3>%s</h3></div>', $title_text));
+
+		$shading_style = sprintf('margin-top: %s%%; height: %s%%;',((1-$shading_height)*$aspectRatio)*100,$shading_height*100);
+		$title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h3>%s</h3></div>',$shading_style, $title_text));
 				
 		return sprintf('
-		<div class="featpicbox-dummy"></div>
+		<div class="featpicbox-dummy" style="margin-top:%s%%"></div>
 		<div id="%s" class="fbox %s">
 		<a class="featpicbox-link" href="%s">
 			<div class="featpicbox-image" style="background-image:url(\'%s\');">
 				%s
 			</div>
 		</a>
-		</div>', 'fbox_'.$p->ID, $class, "http://google.co.uk", $box_icon, $title);
+		</div>',$aspectRatio*100, 'fbox_'.$p->ID, $class, "http://google.co.uk", $box_icon, $title);
 	
 	}
 	
