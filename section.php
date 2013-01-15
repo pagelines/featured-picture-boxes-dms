@@ -213,9 +213,6 @@ class FeatPicBoxes extends PageLinesSection {
 
 				$q = new WP_Query( $params );
 				
-				//var_dump($params); // debug
-				//print "<br><br>";
-				//var_dump($q);
 				
 				if(empty($q->posts)){
 					echo setup_section_notify( $this, 'Add Box Posts To Activate.', admin_url('edit.php?post_type='.$this->ptID), 'Add Posts' );
@@ -223,10 +220,13 @@ class FeatPicBoxes extends PageLinesSection {
 				}
 			
 			// Grid Args
-				$args = array( 'per_row' => $per_row, 'callback' => array(&$this, 'draw_boxes'), 'class' => $class." "."featpicbox-pl-theme" );
+				$args = array( 'per_row' => $per_row, 'callback' => array(&$this, 'draw_boxes'), 'class' => $class );
+
+			// Theming
+				$extra_class = 'fpb-text-on-hover';
 
 			// Call the Grid
-				printf('<div class="fboxes fix">%s</div>', grid( $q, $args ));
+				printf('<div class="%s fix">%s</div>',$extra_class, grid( $q, $args )); //
 		
 	}
 	
@@ -239,8 +239,9 @@ class FeatPicBoxes extends PageLinesSection {
 		$post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
 		$default_image = ( ploption( 'FeatPicBoxes_defaultImage', $this->oset ) ) ? ploption( 'FeatPicBoxes_defaultImage', $this->oset ) : 'boxes';
 		
-		$shading_height = 0.25;
-		
+		$shading_height = 1; // an option half would be 0.25
+		$color_overide = '#295f67'; // TODO: another option
+
 		$oset = array('post_id' => $p->ID);
 	 	$box_link = plmeta('the_box_icon_link', $oset);
 		$box_icon = plmeta('the_box_icon', $oset);
@@ -261,7 +262,9 @@ class FeatPicBoxes extends PageLinesSection {
 	
 
 		$shading_style = sprintf('margin-top: %s%%; height: %s%%;',((1-$shading_height)*$aspectRatio)*100,$shading_height*100);
-		$title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h3>%s</h3></div>',$shading_style, $title_text));
+		if ($color_overide){ $shading_style = sprintf('%s background-color:%s; ',$shading_style,$color_overide);}
+
+		$title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1>%s</h1></div>',$shading_style, $title_text));
 				
 		return sprintf('
 		<div class="featpicbox-dummy" style="margin-top:%s%%"></div>

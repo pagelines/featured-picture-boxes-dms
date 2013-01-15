@@ -1,3 +1,5 @@
+//@fpb-shade-trans-color: hue((@pl-base), saturation(@pl-base), lightness(@pl-base), 0.6);
+
 #featured-picture-boxes {
 
 	.content-pad{padding-bottom: 5px}
@@ -9,7 +11,11 @@
 	// .border-radius(5px);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 	
-	background-color:#FFF; // to allow opactive to shine through
+	background-color:#FFF; // to allow opacity to shine through
+
+	.box-sizing(border-box);
+	margin: 4px;
+
 	}
 }
 
@@ -31,39 +37,44 @@
 	-o-transition: all 0.4s ease;
 	-ms-transition: all 0.4s ease;
 	transition: all 0.4s ease;
-	
-	&:hover {opacity: 0.6;}
 }
 
 .featpicbox-link {display:block}
 
 .featpicbox-shading {
-
-	background-color:hsla(206, 96%, 53%, 0.5);
 	overflow:hidden;
 	// .border-radius(5px);
 	.box-sizing(border-box);
 	padding:5px 10px;
 	
-	#gradient .vertical(fade(#555, 50%), fade(#333, 50%) );
-	
-	h3 {}
+	h1 {
+		color:#FFF;
+		font-weight: 200;
+		font-size:20px;
+		}
 	
 }
 
 // themes
 	// pagelines style
-	.featpicbox-pl-theme {
-	
-		.grid-element{
-			.box-sizing(border-box);
-			margin: 4px;
-		}
-		
-		h3 {
-			color:#FFF;
-			
-			}
-		
-		
+.featpicbox-pl-theme {
+	.featpicbox-image {
+		&:hover {opacity: 0.6;}
 	}
+
+	.featpicbox-shading {
+		background-color: @pl-base;
+		#gradient .vertical(fade(#555, 50%), fade(#333, 50%) );
+	}
+}
+
+.fpb-text-on-hover {
+	.featpicbox-shading {
+		background-color: @pl-base;
+		visibility: hidden;
+	}
+
+	.featpicbox-image{
+		&:hover{ .featpicbox-shading{ visibility: visible;}}
+	}
+}
