@@ -274,7 +274,7 @@ class FeatPicBoxes extends PageLinesSection {
 				%s
 			</div>
 		</a>
-		</div>',$aspectRatio*100, 'fbox_'.$p->ID, $class, "http://google.co.uk", $box_icon, $title);
+		</div>',$aspectRatio*100, 'fbox_'.$p->ID, $class, $box_link, $box_icon, $title);
 	
 	}
 	
