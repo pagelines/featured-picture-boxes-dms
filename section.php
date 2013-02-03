@@ -84,6 +84,11 @@ class FeatPicBoxes extends PageLinesSection {
                             'inputlabel'     => __( 'Theme color', 'FeatPicBoxes'),
                             'shortexp' => 'By default the section will use your background color. You can overwrite that here',
                         ),
+                        'FeatPicBoxes_trans_hover' => array(
+                            'type'             => 'check',
+                            'inputlabel'     => __( 'make hover overlay transparent', 'FeatPicBoxes'),
+                            'shortexp' => 'If checked make the hover overlay transparent instead of a solid color (where applicable)',
+                        ),
                         'FeatPicBoxes_border' => array(
                             'type'             => 'check',
                             'inputlabel'     => __( 'Add a border round boxes?', 'FeatPicBoxes'),
@@ -195,8 +200,8 @@ class FeatPicBoxes extends PageLinesSection {
         
         // Options
             $per_row = ( ploption( 'FeatPicBoxes_col_number', $this->oset) ) ? ploption( 'FeatPicBoxes_col_number', $this->oset) : 3; 
-            $box_set = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;
-            $box_limit = ploption( 'FeatPicBoxes_items', $this->oset );
+            $box_set = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null; # TODO: test if working
+            $box_limit = ploption( 'FeatPicBoxes_items', $this->oset ); # TODO: test if working
 
             $post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
             $post_category = ( ploption( 'FeatPicBoxes_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_category', $this->oset ) : null;
@@ -259,8 +264,8 @@ class FeatPicBoxes extends PageLinesSection {
         
         if ($post_source == 'post_cat' || $post_source == 'post') {
             if ( has_post_thumbnail( $p->ID ) ) {
-                $box_icon = wp_get_attachment_image_src( get_post_thumbnail_id( $p->ID ), 'single-post-thumbnail'  );
-                $box_icon = $box_icon[0]; // just the URL
+                $box_icon_array = wp_get_attachment_image_src( get_post_thumbnail_id( $p->ID ), 'single-post-thumbnail'  );
+                $box_icon = $box_icon_array[0]; // just the URL
                 }
             else { $box_icon = null; }
             }
@@ -272,8 +277,8 @@ class FeatPicBoxes extends PageLinesSection {
         $title_text = ($box_link) ? sprintf('<a href="%s">%s</a>', $box_link, $p->post_title ) : $p->post_title; 
     
 
-        $shading_style = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
-        if ($this->color_overide){ $shading_style = sprintf('%s background-color:%s; ',$shading_style,$this->color_overide);}
+        $shading_layout = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
+        $shading_style = sprintf('%s background-color:%s; ',$shading_layout,$this->hover_color);
 
         $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1>%s</h1></div>',$shading_style, $title_text)); // TODO why shortcpde?
                 
@@ -291,22 +296,35 @@ class FeatPicBoxes extends PageLinesSection {
     
     function parse_theme(){
         // from options
-        $this->color_overide = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : bgcolor; // TODO get from bgcolor option
+        $this->theme_color = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : '#FF0000'; // TODO get from bgcolor option
         $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; // TODO write code to parse theme
-        $this->hoverStyle = ( ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) ) ? ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) : 'full'; // TODO wrtie code to parse hoverstyle
+        $this->hoverStyle = ( ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) ) ? ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) : 'full';
         $this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : True; // TODO wrtie code to parse border
-        
+        $trans_hover = ( ploption( 'FeatPicBoxes_trans_hover', $this->oset ) ) ? ploption( 'FeatPicBoxes_trans_hover', $this->oset ) : False;
         // set some variables here, call functions to set others.
         
-        if ($this->hoverStyle == 'part'){
-            $this->shading_height = 0.4; # TODO: have theme adjust this
-        }else{
-            $this->shading_height = 1; # TODO: have theme adjust this
-        }
-        
+        $this->shading_height = ($this->hoverStyle == 'part') ? $this->shading_height = 0.4 : 1;
+
+        $this->hover_color = ($trans_hover) ? hex2rgba($this->theme_color,0.6) : $this->theme_color;
         
     }
     
+}
 
-    
+function hex2rgba($hex,$alpha=0.6) {
+   $hex = str_replace("#", "", $hex);
+
+   if(strlen($hex) == 3) {
+      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+   } else {
+      $r = hexdec(substr($hex,0,2));
+      $g = hexdec(substr($hex,2,2));
+      $b = hexdec(substr($hex,4,2));
+   }
+   
+   $rgba = sprintf('rgba(%s,%s,%s,%s)',$r,$g,$b,$alpha);
+   //return implode(",", $rgb); // returns the rgb values separated by commas
+   return $rgba; // returns an array with the rgb values
 }
