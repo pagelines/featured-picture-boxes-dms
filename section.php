@@ -11,7 +11,7 @@
 
 class FeatPicBoxes extends PageLinesSection {
 
-    var $taxID = 'feature-sets';
+    var $taxID = 'box-sets';
     
     function section_optionator( $settings ){
         
