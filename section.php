@@ -269,7 +269,7 @@ class FeatPicBoxes extends PageLinesSection {
         
         $class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null;
         
-        $title_text = ($box_link) ? sprintf('<a href="%s">%s</a>', $box_link, $p->post_title ) : $p->post_title; 
+        $title_text = $p->post_title; 
     
         
         // Some theme modifications
@@ -283,6 +283,7 @@ class FeatPicBoxes extends PageLinesSection {
         // output
         return sprintf('
         <div class="featpicbox-dummy" style="margin-top:%s%%"></div>
+        
         <div id="%s" class="fbox %s">
         <a class="featpicbox-link" href="%s">
             <div class="featpicbox-image" style="background-image:url(\'%s\');">
