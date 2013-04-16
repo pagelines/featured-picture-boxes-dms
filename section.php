@@ -271,12 +271,16 @@ class FeatPicBoxes extends PageLinesSection {
         
         $title_text = ($box_link) ? sprintf('<a href="%s">%s</a>', $box_link, $p->post_title ) : $p->post_title; 
     
-
+        
+        // Some theme modifications
         $shading_style = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
+        
         if ($this->color_overide){ $shading_style = sprintf('%s background-color:%s; ',$shading_style,$this->color_overide);}
 
-        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1>%s</h1></div>',$shading_style, $title_text)); // TODO why shortcpde?
-                
+        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1>%s</h1></div>',$shading_style, $title_text));
+        
+        
+        // output
         return sprintf('
         <div class="featpicbox-dummy" style="margin-top:%s%%"></div>
         <div id="%s" class="fbox %s">
@@ -291,7 +295,7 @@ class FeatPicBoxes extends PageLinesSection {
     
     function parse_theme(){
         // from options
-        $this->color_overide = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : bgcolor; // TODO get from bgcolor option
+        $this->color_overide = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : False; // coded in draw_boxes
         $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; // TODO write code to parse theme
         $this->hoverStyle = ( ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) ) ? ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) : 'full'; // TODO wrtie code to parse hoverstyle
         $this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : True; // TODO wrtie code to parse border
@@ -306,7 +310,4 @@ class FeatPicBoxes extends PageLinesSection {
         
         
     }
-    
-
-    
 }
