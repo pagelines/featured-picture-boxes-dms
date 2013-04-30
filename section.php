@@ -285,13 +285,13 @@ class FeatPicBoxes extends PageLinesSection {
         return sprintf('
         <div class="featpicbox-dummy" style="margin-top:%s%%"></div>
         
-        <div id="%s" class="fbox %s %s">
+        <div id="%s" class="fpbox %s %s">
         <a class="featpicbox-link" href="%s">
             <div class="featpicbox-image" style="background-image:url(\'%s\');">
                 %s
             </div>
         </a>
-        </div>',$aspectRatio*100, 'fbox_'.$p->ID, $class, $this->themeclass, $box_link, $box_icon, $title);
+        </div>',$aspectRatio*100, 'fpbox_'.$p->ID, $class, $this->themeclass, $box_link, $box_icon, $title);
     
     }
     
