@@ -91,7 +91,7 @@ class FeatPicBoxes extends PageLinesSection {
                         ),
                         'FeatPicBoxes_shadingHeight' => array(
                                 'type'            => 'select',
-                                'default'        => 'full',
+                                'default'        => 'part',
                                 'inputlabel'    => __('Hover / Shading Height', 'FeatPicBoxes'),
                                 'selectvalues' => array(
                                     'full'         => array('name' => __( 'Full Cover', 'FeatPicBoxes') ),
@@ -241,11 +241,8 @@ class FeatPicBoxes extends PageLinesSection {
             // Grid Args
                 $args = array( 'per_row' => $per_row, 'callback' => array(&$this, 'draw_boxes'), 'class' => $class );
 
-            // Theming
-                $extra_class = 'fpb-text-on-hover';
-
             // Call the Grid
-                printf('<div class="%s fix">%s</div>',$extra_class, grid( $q, $args )); //
+                printf('<div class="%s fix">%s</div>',$this->themeclass, grid( $q, $args )); //
         
     }
     
@@ -318,7 +315,7 @@ class FeatPicBoxes extends PageLinesSection {
             $this->themeclass += 'fpb-text-on-hover ';
         }
         elseif ($this->theme == 'standard') {
-            $this->themclass = 'fpb-standard ';
+            $this->themeclass = 'fpb-standard ';
         }
         
         $this->shading_height = ($shading_style == 'part') ? 0.4 : 1;
