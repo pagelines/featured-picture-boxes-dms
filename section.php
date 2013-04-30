@@ -18,9 +18,34 @@ class FeatPicBoxes extends PageLinesSection {
         $settings = wp_parse_args($settings, $this->optionator_default);
         
             $tab = array(
+                
+               'FeatPicBoxes_source' => array(
+                        'type'        => 'multi_option', 
+                        'title'        => __('Featured Boxes Source and Order', 'FeatPicBoxes'), 
+                        'shortexp'    => __('Advanced options for box sources and their order.', 'FeatPicBoxes'),
+                        'selectvalues'    => array(
+                            'FeatPicBoxes_source'    => array(
+                                    'default'    => 'boxes',
+                                    'type'        => 'select',
+                                    'selectvalues'         => array(
+                                        'boxes'     => array('name' => __( 'Box Posts', 'FeatPicBoxes' ) ),
+                                        'post_cat'         => array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
+                                        'post'     => array('name' => __( 'Use all Posts', 'FeatPicBoxes' ) ),
+                                    ),
+                                    'inputlabel'    => __( 'Select Feature Post Source (Optional - Defaults to boxes)', 'FeatPicBoxes' ),
+                                ),
+                            'FeatPicBoxes_category'        => array(
+                                    'default'        => 1,
+                                    'type'            => 'select',
+                                    'selectvalues'    => $this->get_cats(),
+                                    'inputlabel'    => __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
+                                ),
+                        )
+                ),
+                
                 'FeatPicBoxes_setup' => array(
                     'type'        => 'multi_option', 
-                    'title'        => __('Box Setup Options', 'FeatPicBoxes'), 
+                    'title'        => __('Box Setup Options (box source only)', 'FeatPicBoxes'), 
                     'shortexp'    => __('Basic setup options for handling of boxes.', 'FeatPicBoxes'),
                     'selectvalues'    => array(
                         
@@ -50,6 +75,8 @@ class FeatPicBoxes extends PageLinesSection {
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
                     'shortexp'    => __('Colour and theme options for the boxes', 'FeatPicBoxes'),
+                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio 
+                        (width is set by the no. boxes per row and the space you put it in) which is height/width. 1 is a square and ', 'FeatPicBoxes'),
                     'selectvalues'    => array(
 
                         'FeatPicBoxes_theme' => array(
@@ -75,7 +102,7 @@ class FeatPicBoxes extends PageLinesSection {
                             'default'        => '1',
                             'type'             => 'text_small',
                             'size'            => 'small',
-                            'inputlabel'     => __( 'Aspect Ratio', 'FeatPicBoxes'),
+                            'inputlabel'     => __( 'Aspect Ratio (this controls the width to height. 1 is square (and the default))', 'FeatPicBoxes'),
                             'shortexp'    => __('Enter the aspect ration the boxes will maintain. This is the width/height.', 'FeatPicBoxes'),
                             'exp'        => __('i.e to have the height double that of the width enter 0.5')
                         ), 
@@ -137,31 +164,6 @@ class FeatPicBoxes extends PageLinesSection {
                         'shortexp'         => __( 'Add a custom CSS class to this set of boxes.', 'FeatPicBoxes'),
                     ),
                     
-                'FeatPicBoxes_source' => array(
-                        'type'        => 'multi_option', 
-                        'title'        => __('Boxes Source and Order (Advanced)', 'FeatPicBoxes'), 
-                        'shortexp'    => __('Advanced options for box sources and their order.', 'FeatPicBoxes'),
-                        'selectvalues'    => array(
-                            'FeatPicBoxes_source'    => array(
-                                    'default'    => 'boxes',
-                                    'version'    => 'pro',
-                                    'type'        => 'select',
-                                    'selectvalues'         => array(
-                                        'boxes'     => array('name' => __( 'Box Posts (custom post type)', 'FeatPicBoxes' ) ),
-                                        'post_cat'         => array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
-                                        'post'     => array('name' => __( 'Use all Posts', 'FeatPicBoxes' ) ),
-                                    ),
-                                    'inputlabel'    => __( 'Select Feature Post Source (Optional - Defaults to Custom Post Type)', 'FeatPicBoxes' ),
-                                ),
-                            'FeatPicBoxes_category'        => array(
-                                    'default'        => 1,
-                                    'version'        => 'pro',
-                                    'type'            => 'select',
-                                    'selectvalues'    => $this->get_cats(),
-                                    'inputlabel'    => __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
-                                ),
-                        )
-                )
             );
         
             $tab_settings = array(
@@ -245,7 +247,7 @@ class FeatPicBoxes extends PageLinesSection {
     function draw_boxes($p, $args){ 
         setup_postdata($p);
 
-        $aspectRatio = ( ploption( 'FeatPicBoxes_aspect_ratio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
+        $aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
         
         
         $post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
@@ -284,13 +286,13 @@ class FeatPicBoxes extends PageLinesSection {
         return sprintf('
         <div class="featpicbox-dummy" style="margin-top:%s%%"></div>
         
-        <div id="%s" class="fbox %s">
+        <div id="%s" class="fbox %s %s">
         <a class="featpicbox-link" href="%s">
             <div class="featpicbox-image" style="background-image:url(\'%s\');">
                 %s
             </div>
         </a>
-        </div>',$aspectRatio*100, 'fbox_'.$p->ID, $class, $box_link, $box_icon, $title);
+        </div>',$aspectRatio*100, 'fbox_'.$p->ID, $class, $this->themeclass, $box_link, $box_icon, $title);
     
     }
     
@@ -298,7 +300,7 @@ class FeatPicBoxes extends PageLinesSection {
         // from options
         $this->color_overide = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : False; // coded in draw_boxes
         $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; // TODO write code to parse theme
-        $this->hoverStyle = ( ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) ) ? ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) : 'full'; // TODO wrtie code to parse hoverstyle
+        $this->hoverStyle = ( ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) ) ? ploption( 'FeatPicBoxes_hoverstyle', $this->oset ) : 'full';
         $this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : True; // TODO wrtie code to parse border
         
         // set some variables here, call functions to set others.
@@ -307,6 +309,16 @@ class FeatPicBoxes extends PageLinesSection {
             $this->shading_height = 0.4; # TODO: have theme adjust this
         }else{
             $this->shading_height = 1; # TODO: have theme adjust this
+        }
+        
+        // theme
+        $this->themeclass = '';
+                
+        if ($this->theme == 'hover'){
+            $this->themeclass += 'fpb-text-on-hover ';
+        }
+        elseif ($this->theme == 'standard') {
+            $this->themclass = 'fpb-standard ';
         }
         
         
