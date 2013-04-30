@@ -242,7 +242,7 @@ class FeatPicBoxes extends PageLinesSection {
                 $args = array( 'per_row' => $per_row, 'callback' => array(&$this, 'draw_boxes'), 'class' => $class );
 
             // Call the Grid
-                printf('<div class="%s fix">%s</div>',$this->themeclass, grid( $q, $args )); //
+                printf('<div class="%s fix">%s</div>',$this->themeclass, grid( $q, $args )); // where the theme classes are parsed
         
     }
     
@@ -271,7 +271,7 @@ class FeatPicBoxes extends PageLinesSection {
             
         if ($box_icon == null){ $box_icon = $default_image;}
         
-        $class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null;
+        $class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null; // userset classes within a box
         
         $title_text = $p->post_title; 
 
@@ -285,13 +285,13 @@ class FeatPicBoxes extends PageLinesSection {
         return sprintf('
         <div class="featpicbox-dummy" style="margin-top:%s%%"></div>
         
-        <div id="%s" class="fpbox %s %s">
+        <div id="%s" class="fpbox %s">
         <a class="featpicbox-link" href="%s">
             <div class="featpicbox-image" style="background-image:url(\'%s\');">
                 %s
             </div>
         </a>
-        </div>',$aspectRatio*100, 'fpbox_'.$p->ID, $class, $this->themeclass, $box_link, $box_icon, $title);
+        </div>',$aspectRatio*100, $class, 'fpbox_'.$p->ID, $box_link, $box_icon, $title);
     
     }
     
@@ -300,27 +300,25 @@ class FeatPicBoxes extends PageLinesSection {
 
         $this->color_overide = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : False; // coded in draw_boxes
 
-        $this->theme_color = ( ploption( 'FeatPicBoxes_color', $this->oset ) ) ? ploption( 'FeatPicBoxes_color', $this->oset ) : '#FF0000'; // TODO get from bgcolor option
-
-        $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; // TODO write code to parse theme
+        $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; 
         $this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : True; // TODO wrtie code to parse border
         $trans_hover = ( ploption( 'FeatPicBoxes_trans_hover', $this->oset ) ) ? ploption( 'FeatPicBoxes_trans_hover', $this->oset ) : False;
         $shading_style = ( ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) : 'part';
         // set some variables here, call functions to set others.
         
         // theme
-        $this->themeclass = '';
+        $this->themeclass = ' ';
                 
         if ($this->theme == 'hover'){
-            $this->themeclass += 'fpb-text-on-hover ';
+            $this->themeclass .= 'fpb-text-on-hover ';
         }
         elseif ($this->theme == 'standard') {
-            $this->themeclass = 'fpb-standard ';
+            $this->themeclass .= 'fpb-standard ';
         }
         
         $this->shading_height = ($shading_style == 'part') ? 0.4 : 1;
 
-        $this->hover_color = ($trans_hover) ? hex2rgba($this->theme_color,0.6) : $this->theme_color;
+        $this->hover_color = ($trans_hover) ? hex2rgba($this->color_overide,0.6) : $this->color_overide;
     }
     
 }
