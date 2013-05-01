@@ -98,21 +98,23 @@ class FeatPicBoxes extends PageLinesSection {
                             'shortexp'    => __('Enter the aspect ration the boxes will maintain. This is the width/height.', 'FeatPicBoxes'),
                             'exp'        => __('i.e to have the height double that of the width enter 0.5')
                         ), 
-                        'FeatPicBoxes_color' => array(
-                            'type'             => 'color_multi',
-                            'selectvalues'    => array(
+//                        'FeatPicBoxes_color' => array(
+//                            'type'             => 'color_multi',
+//                            'selectvalues'    => array(
                                 
                                 'FeatPicBoxes_color_bg' => array(
+                                    'type'             => 'colorpicker',
                                     'inputlabel'     => __( 'Hover / shading color (optional)', 'FeatPicBoxes'),
                                     'shortexp' => 'By default the section will use your background color. You can overwrite that here',
                                     ),
                                 
                                 'FeatPicBoxes_color_text' => array(
+                                    'type'             => 'colorpicker',
                                     'inputlabel'     => __( 'text color (optional)', 'FeatPicBoxes'),
                                     'shortexp' => 'By default the section will use your normal text color. You can overwrite that here',
                                     ),
-                                )
-                        ),
+                                //)
+                        //),
                         'FeatPicBoxes_trans_hover' => array(
                             'type'             => 'check',
                             'inputlabel'     => __( 'make hover / shading transparent?', 'FeatPicBoxes'),
