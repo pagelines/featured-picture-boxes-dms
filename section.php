@@ -282,6 +282,8 @@ class FeatPicBoxes extends PageLinesSection {
                 $box_icon = $box_icon_array[0]; // just the URL
                 }
             else { $box_icon = null; }
+            
+            $box_link = $p->guid;
             }
             
         if ($box_icon == null){ $box_icon = $default_image;}
