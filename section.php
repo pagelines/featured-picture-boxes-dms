@@ -40,33 +40,25 @@ class FeatPicBoxes extends PageLinesSection {
                                     'selectvalues'    => $this->get_cats(),
                                     'inputlabel'    => __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
                                 ),
-                        )
-                ),
-                
-                'FeatPicBoxes_setup' => array(
-                    'type'        => 'multi_option', 
-                    'title'        => __('Box Setup Options (box source only)', 'FeatPicBoxes'), 
-                    'shortexp'    => __('Basic setup options for handling of boxes.', 'FeatPicBoxes'),
-                    'selectvalues'    => array(
                         
-                        'FeatPicBoxes_set' => array(
-                            'default'        => 'default-boxes',
-                            'type'             => 'select_taxonomy',
-                            'taxonomy_id'    => $this->taxID,                
-                            'inputlabel'    => __( 'Box Set To Show', 'FeatPicBoxes'),
-                        ), 
-                        'FeatPicBoxes_col_number' => array(
-                            'type'             => 'count_select',
-                            'default'        => '3',
-                            'count_number'    => '10', 
-                            'count_start'    => '1',
-                            'inputlabel'         => __( "Boxes Per Row", 'FeatPicBoxes'),
-                        ), 
-                        'FeatPicBoxes_items' => array(
-                            'default'        => '6',
-                            'type'             => 'text_small',
-                            'size'            => 'small',
-                            'inputlabel'     => __( 'Maximum Boxes To Show', 'FeatPicBoxes'),
+                            'FeatPicBoxes_set' => array(
+                                'default'        => 'default-boxes',
+                                'type'             => 'select_taxonomy',
+                                'taxonomy_id'    => $this->taxID,                
+                                'inputlabel'    => __( 'Box Set To Show (Box source only - optional)', 'FeatPicBoxes'),
+                            ), 
+                            'FeatPicBoxes_col_number' => array(
+                                'type'             => 'count_select',
+                                'default'        => '3',
+                                'count_number'    => '10', 
+                                'count_start'    => '1',
+                                'inputlabel'         => __( "Boxes Per Row", 'FeatPicBoxes'),
+                            ), 
+                            'FeatPicBoxes_items' => array(
+                                'default'        => '6',
+                                'type'             => 'text_small',
+                                'size'            => 'small',
+                                'inputlabel'     => __( 'Maximum Boxes To Show', 'FeatPicBoxes'),
                         ),
                     ),
                 ),
@@ -123,7 +115,7 @@ class FeatPicBoxes extends PageLinesSection {
                         ),
                         'FeatPicBoxes_trans_hover' => array(
                             'type'             => 'check',
-                            'inputlabel'     => __( 'make hover /shading transparent?', 'FeatPicBoxes'),
+                            'inputlabel'     => __( 'make hover / shading transparent?', 'FeatPicBoxes'),
                             'shortexp' => 'If checked make the hover overlay transparent instead of a solid color (where applicable)',
                         ),
 //                        'FeatPicBoxes_border' => array(
