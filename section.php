@@ -330,7 +330,7 @@ class FeatPicBoxes extends PageLinesSection {
             $this->themeclass .= 'fpb-standard ';
         }
         
-        if ($this->shadow = True){
+        if ($this->shadow == True){
             $this->themeclass .= 'fpb-shadow ';
         }
         
