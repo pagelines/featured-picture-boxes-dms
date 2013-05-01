@@ -78,7 +78,7 @@ class FeatPicBoxes extends PageLinesSection {
                                 'selectvalues' => array(
                                     'standard'         => array('name' => __( 'standard (no hover)', 'FeatPicBoxes') ),
                                     'hover'     => array('name' => __( 'hover', 'FeatPicBoxes') ),
-                                    'acordian' => array('name' => __( 'acordian theme', 'FeatPicBoxes') ),
+                                    //'acordian' => array('name' => __( 'acordian theme', 'FeatPicBoxes') ),
                                     ),
                         ),
                         'FeatPicBoxes_shadingHeight' => array(
@@ -98,33 +98,26 @@ class FeatPicBoxes extends PageLinesSection {
                             'shortexp'    => __('Enter the aspect ration the boxes will maintain. This is the width/height.', 'FeatPicBoxes'),
                             'exp'        => __('i.e to have the height double that of the width enter 0.5')
                         ), 
-//                        'FeatPicBoxes_color' => array(
-//                            'type'             => 'color_multi',
-//                            'selectvalues'    => array(
+
                                 
-                                'FeatPicBoxes_color_bg' => array(
-                                    'type'             => 'colorpicker',
-                                    'inputlabel'     => __( 'Hover / shading color (optional)', 'FeatPicBoxes'),
-                                    'shortexp' => 'By default the section will use your background color. You can overwrite that here',
-                                    ),
-                                
-                                'FeatPicBoxes_color_text' => array(
-                                    'type'             => 'colorpicker',
-                                    'inputlabel'     => __( 'text color (optional)', 'FeatPicBoxes'),
-                                    'shortexp' => 'By default the section will use your normal text color. You can overwrite that here',
-                                    ),
-                                //)
-                        //),
+                        'FeatPicBoxes_color_bg' => array(
+                            'type'             => 'colorpicker',
+                            'inputlabel'     => __( 'Hover / shading color (optional)', 'FeatPicBoxes'),
+                            'shortexp' => 'By default the section will use your background color. You can overwrite that here',
+                            ),
+
+                        'FeatPicBoxes_color_text' => array(
+                            'type'             => 'colorpicker',
+                            'inputlabel'     => __( 'text color (optional)', 'FeatPicBoxes'),
+                            'shortexp' => 'By default the section will use your normal text color. You can overwrite that here',
+                            ),
+
                         'FeatPicBoxes_trans_hover' => array(
                             'type'             => 'check',
                             'inputlabel'     => __( 'make hover / shading transparent?', 'FeatPicBoxes'),
                             'shortexp' => 'If checked make the hover overlay transparent instead of a solid color (where applicable)',
                         ),
-//                        'FeatPicBoxes_border' => array(
-//                            'type'             => 'check',
-//                            'inputlabel'     => __( 'Add a border round boxes?', 'FeatPicBoxes'),
-//                            'shortexp' => 'If checked adds a border around the boxes using the background color',
-//                        ),
+
                         'FeatPicBoxes_shadow' => array(
                             'type'             => 'check',
                             'inputlabel'     => __( 'Add a drop shadow to boxes?', 'FeatPicBoxes'),
