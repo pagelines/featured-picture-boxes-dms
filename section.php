@@ -5,7 +5,7 @@
     Author URI: http://ryanvarley.co.uk
     Description: Oraganise boxes with a picture with overlaying text
     Class Name: FeatPicBoxes
-    Workswith: templates, main, header, morefoot, footer, sidebar
+    Workswith: templates, main, header, morefoot, footer, sidebar1, sidebar2, sidebar_wrap
     Cloning: true
 */
 
