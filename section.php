@@ -161,7 +161,7 @@ class FeatPicBoxes extends PageLinesSection {
                             ),
                         ),
                     ),
-                    'FeatPicBoxes_defaultImage'     => array(
+                    'FeatPicBoxes_default_image'     => array(
                         'type'             => 'image_upload',
                         'inputlabel'    => __('Default image', 'FeatPicBoxes'),
                         'title'         => __('Replace the default image for boxes and posts without them (optional)', 'FeatPicBoxes'),
@@ -211,13 +211,16 @@ class FeatPicBoxes extends PageLinesSection {
             $per_row = ( ploption( 'FeatPicBoxes_col_number', $this->oset) ) ? ploption( 'FeatPicBoxes_col_number', $this->oset) : 3; 
             $box_set = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null; # TODO: test if working
             $box_limit = ploption( 'FeatPicBoxes_items', $this->oset ); # TODO: test if working
-
-            $post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
+            $this->default_image = ( ploption( 'FeatPicBoxes_default_image', $this->oset ) ) ? ploption( 'FeatPicBoxes_default_image', $this->oset ) : $this->base_url.'/images/default-image.png';
+            
+            $aspectRatio = $this->aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
+            $post_source = $this->postSource = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
             $post_category = ( ploption( 'FeatPicBoxes_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_category', $this->oset ) : null;
             
             $class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
             
             $this->parse_theme();
+            
             
         // Actions    
             // Set up the query for this page
@@ -256,17 +259,10 @@ class FeatPicBoxes extends PageLinesSection {
     function draw_boxes($p, $args){ 
         setup_postdata($p);
 
-        $aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
-        
-        
-        $post_source = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
-        $default_image = ( ploption( 'FeatPicBoxes_defaultImage', $this->oset ) ) ? ploption( 'FeatPicBoxes_defaultImage', $this->oset ) : $this->base_url.'/images/default-image.png';
-        
-        
+        $aspectRatio = $this->aspectRatio;
+        $post_source = $this->postSource;
 
         $oset = array('post_id' => $p->ID);
-        $box_link = plmeta('the_box_icon_link', $oset);
-        $box_icon = plmeta('the_box_icon', $oset);
         
         if ($post_source == 'post_cat' || $post_source == 'post') {
             if ( has_post_thumbnail( $p->ID ) ) {
@@ -277,8 +273,13 @@ class FeatPicBoxes extends PageLinesSection {
             
             $box_link = $p->guid;
             }
+        elseif ($post_source == 'boxes') {
             
-        if ($box_icon == null){ $box_icon = $default_image;}
+            $box_link = plmeta('the_box_icon_link', $oset);
+            $box_icon = plmeta('the_box_icon', $oset);
+        }
+            
+        if ($box_icon == null){ $box_icon = $this->default_image;}
         
         $class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null; // userset classes within a box
         
@@ -301,7 +302,6 @@ class FeatPicBoxes extends PageLinesSection {
             </div>
         </a>
         </div>',$aspectRatio*100, $class, 'fpbox_'.$p->ID, $box_link, $box_icon, $title);
-    
     }
     
     function parse_theme(){
