@@ -115,10 +115,10 @@ class FeatPicBoxes extends PageLinesSection {
                                     'shortexp' => 'By default the section will use your background color. You can overwrite that here',
                                     ),
                                 
-//                                'FeatPicBoxes_color_text' => array(
-//                                    'inputlabel'     => __( 'text color (optional)', 'FeatPicBoxes'),
-//                                    'shortexp' => 'By default the section will use your normal text color. You can overwrite that here',
-//                                    ),
+                                'FeatPicBoxes_color_text' => array(
+                                    'inputlabel'     => __( 'text color (optional)', 'FeatPicBoxes'),
+                                    'shortexp' => 'By default the section will use your normal text color. You can overwrite that here',
+                                    ),
                                 )
                         ),
                         'FeatPicBoxes_trans_hover' => array(
@@ -133,8 +133,8 @@ class FeatPicBoxes extends PageLinesSection {
 //                        ),
                         'FeatPicBoxes_shadow' => array(
                             'type'             => 'check',
-                            'inputlabel'     => __( 'Remove the box shadow?', 'FeatPicBoxes'),
-                            'shortexp' => 'If checked removes the drop shadow from the boxes',
+                            'inputlabel'     => __( 'Add a drop shadow to boxes?', 'FeatPicBoxes'),
+                            'shortexp' => 'If checked add the drop shadow to the boxes',
                         ),
                     ),
                 ),
@@ -293,7 +293,7 @@ class FeatPicBoxes extends PageLinesSection {
         $shading_layout = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
         $shading_style = sprintf('%s background-color:%s; ',$shading_layout,$this->hover_color);
 
-        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1>%s</h1></div>',$shading_style, $title_text)); # text coor was added here but cant overule H1
+        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1 style="%s">%s</h1></div>',$shading_style,$this->text_color, $title_text)); # text coor was added here but cant overule H1
         
         
         // output
@@ -314,7 +314,7 @@ class FeatPicBoxes extends PageLinesSection {
         // from options
 
         $this->color_overide = ( ploption( 'FeatPicBoxes_color_bg', $this->oset ) ) ? ploption( 'FeatPicBoxes_color_bg', $this->oset ) : False; // coded in draw_boxes
-//        $this->text_color = ( ploption( 'FeatPicBoxes_color_text', $this->oset ) ) ? 'color:'.ploption( 'FeatPicBoxes_color_text', $this->oset ).'; ' : '';
+        $this->text_color = ( ploption( 'FeatPicBoxes_color_text', $this->oset ) ) ? 'color:'.ploption( 'FeatPicBoxes_color_text', $this->oset ).'; ' : '';
         
         $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; 
         //$this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : False;
@@ -334,7 +334,7 @@ class FeatPicBoxes extends PageLinesSection {
             $this->themeclass .= 'fpb-standard ';
         }
         
-        if ($this->theme = False){
+        if ($this->shadow = True){
             $this->themeclass .= 'fpb-shadow ';
         }
         
