@@ -241,7 +241,7 @@ class FeatPicBoxes extends PageLinesSection {
                 
                 
                 if(empty($q->posts)){
-                    echo setup_section_notify( $this, 'Add Box Posts To Activate.', admin_url('edit.php?post_type='.$this->ptID), 'Add Posts' );
+                    echo setup_section_notify( $this, 'Add content (Box Posts or normal posts in a category) To Activate.');
                     return;
                 }
             
