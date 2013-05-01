@@ -228,7 +228,7 @@ class FeatPicBoxes extends PageLinesSection {
                 $params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
                 
                 if ($post_source == 'post_cat') {
-                    $params[ 'post_type' ] = 'project';
+                    $params[ 'post_type' ] = 'post';
                     $params[ 'cat' ] = $post_category;
                 }
                 else {$params[ 'post_type' ] = $post_source;}
