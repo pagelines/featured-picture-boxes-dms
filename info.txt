@@ -1,5 +1,5 @@
 == Description ==
-Featured picture boxes let you feature content from your posts or boxes on your site with an emphasis on the image. The section is fully customisable and responsive. When choosing a post source we pull the title and the featured image to display in your box.
+Featured Picture Boxes lets you feature content from your posts or boxes on your site with an emphasis on the image. The section is fully customisable and responsive. When choosing a post source we pull the title and the featured image to display in your box.
 
 === Options ===
 * No hover, Full covered hover or partialy covered hover
