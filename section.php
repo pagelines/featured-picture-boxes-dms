@@ -3,10 +3,13 @@
     Section: Featured Picture Boxes
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
-    Description: Oraganise boxes with a picture with overlaying text
+    Version: 1.0
+    Description: Displays posts and boxes with an emphasis on the image.
     Class Name: FeatPicBoxes
-    Workswith: templates, main, header, morefoot, footer, sidebar1, sidebar2, sidebar_wrap
     Cloning: true
+    External:
+    Demo: http://demo.ryanvarley.co.uk/featured-picture-boxes/
+    Workswith: templates, main, header, morefoot, footer, sidebar1, sidebar2, sidebar_wrap
 */
 
 class FeatPicBoxes extends PageLinesSection {

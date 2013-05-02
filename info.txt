@@ -1,0 +1,16 @@
+== Description ==
+Featured picture boxes let you feature content from your posts or boxes on your site with an emphasis on the image. The section is fully customisable and responsive. When choosing a post source we pull the title and the featured image to display in your box.
+
+=== Options ===
+* No hover, Full covered hover or partialy covered hover
+* Shading / hover colour and transparency
+* Choose your post source (boxes, posts or a category)
+* Number of boxes per row and the aspect ratio (keep them square or make them rectangular to your preference)
+* Fully cloneable!
+* Place it anywhere on your page!
+
+Be sure to check out the Demo and screenshots to see the section in action.
+ 
+== Changelog ==
+= 1.0 =
+* Initial release.
