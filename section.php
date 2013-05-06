@@ -4,7 +4,7 @@
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
     Version: 1.0
-    Description: Displays posts and boxes with an emphasis on the image.
+    Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
     External:
@@ -53,7 +53,7 @@ class FeatPicBoxes extends PageLinesSection {
                             'FeatPicBoxes_col_number' => array(
                                 'type'             => 'count_select',
                                 'default'        => '3',
-                                'count_number'    => '10', 
+                                'count_number'    => '6', 
                                 'count_start'    => '1',
                                 'inputlabel'         => __( "Boxes Per Row", 'FeatPicBoxes'),
                             ), 
@@ -69,15 +69,15 @@ class FeatPicBoxes extends PageLinesSection {
                 'FeatPicBoxes_themeOptions' => array(
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
-                    'shortexp'    => __('Colour and theme options for the boxes', 'FeatPicBoxes'),
-                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio 
-                        (width is set by the no. boxes per row and the space you put it in) which is height/width. 1 is a square and ', 'FeatPicBoxes'),
+                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divded by width
+                        (the width is set by the nnumber of boxes per row and the space you put the section in). 1 is a square, 0.5 will twice as wide as it is high (short and wide) and 2 will be twice as high as it is wide (tall and thin). You can type any number.', 'FeatPicBoxes'),
+                    'shortexp'    => __('Color and theme options for the boxes', 'FeatPicBoxes'),
                     'selectvalues'    => array(
 
                         'FeatPicBoxes_theme' => array(
                                 'type'            => 'select',
                                 'default'        => 'hover',
-                                'inputlabel'    => __('Select a theme (view them here)', 'FeatPicBoxes'),
+                                'inputlabel'    => __('Select a theme (<a href="http://demo.ryanvarley.co.uk/featured-picture-boxes" target="_blank">view them here</a>) standard is the default', 'FeatPicBoxes'),
                                 'selectvalues' => array(
                                     'standard'         => array('name' => __( 'standard (no hover)', 'FeatPicBoxes') ),
                                     'hover'     => array('name' => __( 'hover', 'FeatPicBoxes') ),
@@ -97,7 +97,7 @@ class FeatPicBoxes extends PageLinesSection {
                             'default'        => '1',
                             'type'             => 'text_small',
                             'size'            => 'small',
-                            'inputlabel'     => __( 'Aspect Ratio (this controls the width to height. 1 is square (and the default))', 'FeatPicBoxes'),
+                            'inputlabel'     => __( 'Aspect Ratio - this controls the width to height (see more info). The default is 1 (square)', 'FeatPicBoxes'),
                             'shortexp'    => __('Enter the aspect ration the boxes will maintain. This is the width/height.', 'FeatPicBoxes'),
                             'exp'        => __('i.e to have the height double that of the width enter 0.5')
                         ), 
@@ -117,8 +117,8 @@ class FeatPicBoxes extends PageLinesSection {
 
                         'FeatPicBoxes_trans_hover' => array(
                             'type'             => 'check',
-                            'inputlabel'     => __( 'make hover / shading transparent?', 'FeatPicBoxes'),
-                            'shortexp' => 'If checked make the hover overlay transparent instead of a solid color (where applicable)',
+                            'inputlabel'     => __( 'Remove hover / shading transparency?', 'FeatPicBoxes'),
+                            'shortexp' => 'If checked it will remove the hover overlay transparecy leaving a solid color',
                         ),
 
                         'FeatPicBoxes_shadow' => array(
@@ -162,8 +162,8 @@ class FeatPicBoxes extends PageLinesSection {
                     'FeatPicBoxes_default_image'     => array(
                         'type'             => 'image_upload',
                         'inputlabel'    => __('Default image', 'FeatPicBoxes'),
-                        'title'         => __('Replace the default image for boxes and posts without them (optional)', 'FeatPicBoxes'),
-                        'shortexp'        => __('Whenever a post or box is displayed that dosnt have its own image specified this will be used instead.', 'FeatPicBoxes'),
+                        'title'         => __('Replace the default image for boxes and posts without an image (optional)', 'FeatPicBoxes'),
+                        'shortexp'        => __('Whenever a post or box is displayed that dosn\'t have its own image specified this will be used instead.', 'FeatPicBoxes'),
                 ),
                     'FeatPicBoxes_class' => array(
                         'default'        => '',
@@ -178,7 +178,7 @@ class FeatPicBoxes extends PageLinesSection {
         
             $tab_settings = array(
                     'id'         => 'FeatPicBoxes_meta',
-                    'name'         => 'FeatPicBoxes',
+                    'name'         => 'Featured Picture Boxes',
                     'icon'         => $this->icon, 
                     'clone_id'    => $settings['clone_id'], 
                     'active'    => $settings['active']
@@ -311,7 +311,7 @@ class FeatPicBoxes extends PageLinesSection {
         $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; 
         //$this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : False;
         $this->shadow = ( ploption( 'FeatPicBoxes_shadow', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadow', $this->oset ) : False;
-        $trans_hover = ( ploption( 'FeatPicBoxes_trans_hover', $this->oset ) ) ? ploption( 'FeatPicBoxes_trans_hover', $this->oset ) : False;
+        $trans_hover = ploption( 'FeatPicBoxes_trans_hover', $this->oset) ? False : True;
         $shading_style = ( ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) : 'part';
         $custom_class = ( ploption( 'FeatPicBoxes_class', $this->oset ) ) ? ploption( 'FeatPicBoxes_class', $this->oset ) : '';
         // set some variables here, call functions to set others.
