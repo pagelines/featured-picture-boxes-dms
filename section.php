@@ -69,15 +69,15 @@ class FeatPicBoxes extends PageLinesSection {
                 'FeatPicBoxes_themeOptions' => array(
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
-                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio 
-                        (width is set by the no. boxes per row and the space you put it in) which is height/width. 1 is a square and ', 'FeatPicBoxes'),
+                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divded by width
+                        (the width is set by the nnumber of boxes per row and the space you put the section in). 1 is a square, 0.5 will twice as wide as it is high (short and wide) and 2 will be twice as high as it is wide (tall and thin). You can type any number.', 'FeatPicBoxes'),
                     'shortexp'    => __('Color and theme options for the boxes', 'FeatPicBoxes'),
                     'selectvalues'    => array(
 
                         'FeatPicBoxes_theme' => array(
                                 'type'            => 'select',
                                 'default'        => 'hover',
-                                'inputlabel'    => __('Select a theme (view them here) standard is the default', 'FeatPicBoxes'),
+                                'inputlabel'    => __('Select a theme (<a href="http://demo.ryanvarley.co.uk/featured-picture-boxes" target="_blank">view them here</a>) standard is the default', 'FeatPicBoxes'),
                                 'selectvalues' => array(
                                     'standard'         => array('name' => __( 'standard (no hover)', 'FeatPicBoxes') ),
                                     'hover'     => array('name' => __( 'hover', 'FeatPicBoxes') ),
@@ -97,7 +97,7 @@ class FeatPicBoxes extends PageLinesSection {
                             'default'        => '1',
                             'type'             => 'text_small',
                             'size'            => 'small',
-                            'inputlabel'     => __( 'Aspect Ratio (this controls the width to height. 1 is square (and the default))', 'FeatPicBoxes'),
+                            'inputlabel'     => __( 'Aspect Ratio - this controls the width to height (see more info). The default is 1 (square)', 'FeatPicBoxes'),
                             'shortexp'    => __('Enter the aspect ration the boxes will maintain. This is the width/height.', 'FeatPicBoxes'),
                             'exp'        => __('i.e to have the height double that of the width enter 0.5')
                         ), 
