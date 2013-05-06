@@ -53,7 +53,7 @@ class FeatPicBoxes extends PageLinesSection {
                             'FeatPicBoxes_col_number' => array(
                                 'type'             => 'count_select',
                                 'default'        => '3',
-                                'count_number'    => '10', 
+                                'count_number'    => '6', 
                                 'count_start'    => '1',
                                 'inputlabel'         => __( "Boxes Per Row", 'FeatPicBoxes'),
                             ), 
