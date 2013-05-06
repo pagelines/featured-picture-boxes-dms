@@ -69,15 +69,15 @@ class FeatPicBoxes extends PageLinesSection {
                 'FeatPicBoxes_themeOptions' => array(
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
-                    'shortexp'    => __('Colour and theme options for the boxes', 'FeatPicBoxes'),
                     'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio 
                         (width is set by the no. boxes per row and the space you put it in) which is height/width. 1 is a square and ', 'FeatPicBoxes'),
+                    'shortexp'    => __('Color and theme options for the boxes', 'FeatPicBoxes'),
                     'selectvalues'    => array(
 
                         'FeatPicBoxes_theme' => array(
                                 'type'            => 'select',
                                 'default'        => 'hover',
-                                'inputlabel'    => __('Select a theme (view them here)', 'FeatPicBoxes'),
+                                'inputlabel'    => __('Select a theme (view them here) standard is the default', 'FeatPicBoxes'),
                                 'selectvalues' => array(
                                     'standard'         => array('name' => __( 'standard (no hover)', 'FeatPicBoxes') ),
                                     'hover'     => array('name' => __( 'hover', 'FeatPicBoxes') ),
@@ -117,7 +117,7 @@ class FeatPicBoxes extends PageLinesSection {
 
                         'FeatPicBoxes_trans_hover' => array(
                             'type'             => 'check',
-                            'inputlabel'     => __( 'make hover / shading transparent?', 'FeatPicBoxes'),
+                            'inputlabel'     => __( 'Make hover / shading transparent?', 'FeatPicBoxes'),
                             'shortexp' => 'If checked make the hover overlay transparent instead of a solid color (where applicable)',
                         ),
 
@@ -162,8 +162,8 @@ class FeatPicBoxes extends PageLinesSection {
                     'FeatPicBoxes_default_image'     => array(
                         'type'             => 'image_upload',
                         'inputlabel'    => __('Default image', 'FeatPicBoxes'),
-                        'title'         => __('Replace the default image for boxes and posts without them (optional)', 'FeatPicBoxes'),
-                        'shortexp'        => __('Whenever a post or box is displayed that dosnt have its own image specified this will be used instead.', 'FeatPicBoxes'),
+                        'title'         => __('Replace the default image for boxes and posts without an image (optional)', 'FeatPicBoxes'),
+                        'shortexp'        => __('Whenever a post or box is displayed that dosn\'t have its own image specified this will be used instead.', 'FeatPicBoxes'),
                 ),
                     'FeatPicBoxes_class' => array(
                         'default'        => '',
@@ -178,7 +178,7 @@ class FeatPicBoxes extends PageLinesSection {
         
             $tab_settings = array(
                     'id'         => 'FeatPicBoxes_meta',
-                    'name'         => 'FeatPicBoxes',
+                    'name'         => 'Featured Picture Boxes',
                     'icon'         => $this->icon, 
                     'clone_id'    => $settings['clone_id'], 
                     'active'    => $settings['active']
