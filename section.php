@@ -117,8 +117,8 @@ class FeatPicBoxes extends PageLinesSection {
 
                         'FeatPicBoxes_trans_hover' => array(
                             'type'             => 'check',
-                            'inputlabel'     => __( 'Make hover / shading transparent?', 'FeatPicBoxes'),
-                            'shortexp' => 'If checked make the hover overlay transparent instead of a solid color (where applicable)',
+                            'inputlabel'     => __( 'Remove hover / shading transparency?', 'FeatPicBoxes'),
+                            'shortexp' => 'If checked it will remove the hover overlay transparecy leaving a solid color',
                         ),
 
                         'FeatPicBoxes_shadow' => array(
@@ -311,7 +311,7 @@ class FeatPicBoxes extends PageLinesSection {
         $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; 
         //$this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : False;
         $this->shadow = ( ploption( 'FeatPicBoxes_shadow', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadow', $this->oset ) : False;
-        $trans_hover = ( ploption( 'FeatPicBoxes_trans_hover', $this->oset ) ) ? ploption( 'FeatPicBoxes_trans_hover', $this->oset ) : False;
+        $trans_hover = ploption( 'FeatPicBoxes_trans_hover', $this->oset) ? False : True;
         $shading_style = ( ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) : 'part';
         $custom_class = ( ploption( 'FeatPicBoxes_class', $this->oset ) ) ? ploption( 'FeatPicBoxes_class', $this->oset ) : '';
         // set some variables here, call functions to set others.
