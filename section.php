@@ -4,7 +4,7 @@
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
     Version: 1.0
-    Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent overlay or the text appearing on hover.
+    Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent or solid overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
     External:
@@ -70,7 +70,7 @@ class FeatPicBoxes extends PageLinesSection {
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
                     'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divded by width
-                        (the width is set by the nnumber of boxes per row and the space you put the section in). 1 is a square, 0.5 will twice as wide as it is high (short and wide) and 2 will be twice as high as it is wide (tall and thin). You can type any number.', 'FeatPicBoxes'),
+                        (the width is set by the number of boxes per row and the space you put the section in). 1 is a square, 0.5 will twice as wide as it is high (short and wide) and 2 will be twice as high as it is wide (tall and thin). You can type any number.', 'FeatPicBoxes'),
                     'shortexp'    => __('Color and theme options for the boxes', 'FeatPicBoxes'),
                     'selectvalues'    => array(
 
@@ -163,7 +163,7 @@ class FeatPicBoxes extends PageLinesSection {
                         'type'             => 'image_upload',
                         'inputlabel'    => __('Default image', 'FeatPicBoxes'),
                         'title'         => __('Replace the default image for boxes and posts without an image (optional)', 'FeatPicBoxes'),
-                        'shortexp'        => __('Whenever a post or box is displayed that dosn\'t have its own image specified this will be used instead.', 'FeatPicBoxes'),
+                        'shortexp'        => __('Whenever a post or box is displayed that doesn\'t have its own image specified this will be used instead.', 'FeatPicBoxes'),
                 ),
                     'FeatPicBoxes_class' => array(
                         'default'        => '',
