@@ -3,7 +3,7 @@
     Section: Featured Picture Boxes
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
-    Version: 1.0
+    Version: 1.0.2
     Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent or solid overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
@@ -281,7 +281,13 @@ class FeatPicBoxes extends PageLinesSection {
         
         $class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null; // userset classes within a box
         
-        $title_text = $p->post_title; 
+        $title_overide = get_post_meta($p->ID, 'fpb_title', true);
+        if ($title_overide){
+            $title_text = $title_overide;
+        }
+        else{
+            $title_text = $p->post_title;
+        }
 
         $shading_layout = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
         $shading_style = sprintf('%s background-color:%s; ',$shading_layout,$this->hover_color);
