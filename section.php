@@ -281,7 +281,13 @@ class FeatPicBoxes extends PageLinesSection {
         
         $class = ( plmeta( 'box_class', $oset ) ) ? plmeta( 'box_class', $oset ) : null; // userset classes within a box
         
-        $title_text = $p->post_title; 
+        $title_overide = get_post_meta($p->ID, 'fpb_title', true);
+        if ($title_overide){
+            $title_text = $title_overide;
+        }
+        else{
+            $title_text = $p->post_title;
+        }
 
         $shading_layout = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
         $shading_style = sprintf('%s background-color:%s; ',$shading_layout,$this->hover_color);
