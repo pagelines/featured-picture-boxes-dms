@@ -9,6 +9,8 @@ Shading / hover color and transparency
 
 Choose your post source (boxes, posts or a category)
 
+Use a custom title by setting a 'fpb_title' custom field in posts (see <a href="http://ryanvarley.co.uk/projects/pagelines/featured-picture-boxes/using-custom-titles/">this guide</a>)
+
 Number of boxes per row and the aspect ratio (keep them square or make them rectangular to your preference)
 
 Fully cloneable!
@@ -18,5 +20,7 @@ Place it anywhere on your page!
 Be sure to check out the Demo and screenshots to see the section in action.
  
 == Changelog ==
+= 1.0.2 =
+* Allowed users to use custom titles by setting a 'fpb_title' custom field
 = 1.0 =
 * Initial release.
