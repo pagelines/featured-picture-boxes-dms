@@ -20,6 +20,8 @@ Place it anywhere on your page!
 Be sure to check out the Demo and screenshots to see the section in action.
  
 == Changelog ==
+= 1.0.3 =
+* Fixed webkit jitter on hover opacity bug
 = 1.0.2 =
 * Allowed users to use custom titles by setting a 'fpb_title' custom field
 = 1.0 =
