@@ -292,7 +292,7 @@ class FeatPicBoxes extends PageLinesSection {
         $shading_layout = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
         $shading_style = sprintf('%s background-color:%s; ',$shading_layout,$this->hover_color);
 
-        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1 style="%s">%s</h1></div>',$shading_style,$this->text_color, $title_text)); # text coor was added here but cant overule H1
+        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h3 style="%s">%s</h3></div>',$shading_style,$this->text_color, $title_text)); # text coor was added here but cant overule H1
         
         
         // output
