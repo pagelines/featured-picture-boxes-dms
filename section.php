@@ -3,7 +3,7 @@
     Section: Featured Picture Boxes
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
-    Version: 1.0.3
+    Version: 1.0.4
     Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent or solid overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
