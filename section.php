@@ -3,7 +3,7 @@
     Section: Featured Picture Boxes
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
-    Version: 1.0.3
+    Version: 1.0.4
     Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent or solid overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
@@ -292,7 +292,7 @@ class FeatPicBoxes extends PageLinesSection {
         $shading_layout = sprintf('margin-top: %s%%; height: %s%%;',((1-$this->shading_height)*$aspectRatio)*100,$this->shading_height*100);
         $shading_style = sprintf('%s background-color:%s; ',$shading_layout,$this->hover_color);
 
-        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h1 style="%s">%s</h1></div>',$shading_style,$this->text_color, $title_text)); # text coor was added here but cant overule H1
+        $title = do_shortcode(sprintf('<div class="featpicbox-shading" style="%s"><h3 style="%s">%s</h3></div>',$shading_style,$this->text_color, $title_text)); # text coor was added here but cant overule H1
         
         
         // output
