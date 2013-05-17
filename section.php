@@ -241,9 +241,6 @@ class FeatPicBoxes extends PageLinesSection {
             $post_source = $this->postSource = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
             $post_category = ( ploption( 'FeatPicBoxes_post_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_post_category', $this->oset ) : null;
             $page_parent = ( ploption( 'FeatPicBoxes_page_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_page_category', $this->oset ) : null;
-
-            echo 'test';
-            var_dump($page_parent);
             
             $class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
             
@@ -260,7 +257,10 @@ class FeatPicBoxes extends PageLinesSection {
 
                 $params[ 'post_type' ] = $post_source;
                 if ($post_source == 'post') { $params[ 'cat' ] = $post_category; }
-                elseif ($post_source == 'page') { $params[ 'cat' ] = $page_category; }
+                elseif ($post_source == 'page') {
+                    $params[ 'parent' ] = $page_parent;
+                    $params[ 'post__not_in' ] = array($page_parent);
+                }
                 elseif ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
                 
                 $params[ 'no_found_rows' ] = 1;
