@@ -32,7 +32,6 @@ class FeatPicBoxes extends PageLinesSection {
                                     'type'        => 'select',
                                     'selectvalues'         => array(
                                         'boxes'    => array('name' => __( 'Box Posts', 'FeatPicBoxes' ) ),
-                                        'post_cat' => array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
                                         'post'     => array('name' => __( 'Posts', 'FeatPicBoxes' ) ),
                                         'page'     => array('name' => __( 'Pages', 'FeatPicBoxes' ) ),
                                     ),
@@ -42,13 +41,13 @@ class FeatPicBoxes extends PageLinesSection {
                                     'default'        => 1,
                                     'type'            => 'select',
                                     'selectvalues'    => $this->get_cats('post'),
-                                    'inputlabel'    => __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
+                                    'inputlabel'    => __( 'Select Post Category (Post source only - optional)', 'FeatPicBoxes' ),
                                 ),
                             'FeatPicBoxes_page_category'        => array(
                                 'default'        => 1,
                                 'type'            => 'select',
-                                'selectvalues'    => $this->get_cats('page'),
-                                'inputlabel'    => __( 'Select Page Category (Page category source only)', 'FeatPicBoxes' ),
+                                'selectvalues'    => $this->get_page_parents('page'),
+                                'inputlabel'    => __( 'Select Page Parent (Page source only - optional)', 'FeatPicBoxes' ),
                             ),
                         
                             'FeatPicBoxes_set' => array(
@@ -206,6 +205,22 @@ class FeatPicBoxes extends PageLinesSection {
             
         return ( isset( $categories) ) ? $categories : array();
     }
+
+    function get_page_parents($post_type = 'page') {
+
+        $args = array(
+            'parent' => 0,
+            'post_type' => $post_type,
+            'post_status' => 'publish',
+        );
+
+        $cats = get_pages($args);
+
+        foreach( $cats as $cat )
+            $categories[ $cat->ID ] = array( 'name' => $cat->post_title );
+
+        return ( isset( $categories) ) ? $categories : array();
+    }
     
     
     /**
@@ -225,10 +240,10 @@ class FeatPicBoxes extends PageLinesSection {
             $aspectRatio = $this->aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
             $post_source = $this->postSource = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
             $post_category = ( ploption( 'FeatPicBoxes_post_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_post_category', $this->oset ) : null;
-            $page_category = ( ploption( 'FeatPicBoxes_page_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_page_category', $this->oset ) : null;
+            $page_parent = ( ploption( 'FeatPicBoxes_page_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_page_category', $this->oset ) : null;
 
             echo 'test';
-            var_dump($page_category);
+            var_dump($page_parent);
             
             $class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
             
