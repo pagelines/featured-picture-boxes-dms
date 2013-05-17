@@ -31,18 +31,25 @@ class FeatPicBoxes extends PageLinesSection {
                                     'default'    => 'boxes',
                                     'type'        => 'select',
                                     'selectvalues'         => array(
-                                        'boxes'     => array('name' => __( 'Box Posts', 'FeatPicBoxes' ) ),
-                                        'post_cat'         => array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
-                                        'post'     => array('name' => __( 'Use all Posts', 'FeatPicBoxes' ) ),
+                                        'boxes'    => array('name' => __( 'Box Posts', 'FeatPicBoxes' ) ),
+                                        'post_cat' => array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
+                                        'post'     => array('name' => __( 'Posts', 'FeatPicBoxes' ) ),
+                                        'page'     => array('name' => __( 'Pages', 'FeatPicBoxes' ) ),
                                     ),
                                     'inputlabel'    => __( 'Select Feature Post Source (Optional - Defaults to boxes)', 'FeatPicBoxes' ),
                                 ),
-                            'FeatPicBoxes_category'        => array(
+                            'FeatPicBoxes_post_category'        => array(
                                     'default'        => 1,
                                     'type'            => 'select',
-                                    'selectvalues'    => $this->get_cats(),
+                                    'selectvalues'    => $this->get_cats('post'),
                                     'inputlabel'    => __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
                                 ),
+                            'FeatPicBoxes_page_category'        => array(
+                                'default'        => 1,
+                                'type'            => 'select',
+                                'selectvalues'    => $this->get_cats('page'),
+                                'inputlabel'    => __( 'Select Page Category (Page category source only)', 'FeatPicBoxes' ),
+                            ),
                         
                             'FeatPicBoxes_set' => array(
                                 'default'        => 'default-boxes',
@@ -187,9 +194,13 @@ class FeatPicBoxes extends PageLinesSection {
             register_metatab($tab_settings, $tab);
     }
     
-    function get_cats() {
-    
-        $cats = get_categories();
+    function get_cats($postType) {
+
+        $args = array(
+            'type' => $postType,
+        );
+
+        $cats = get_categories($args);
         foreach( $cats as $cat )
             $categories[ $cat->cat_ID ] = array( 'name' => $cat->name );
             
@@ -213,7 +224,11 @@ class FeatPicBoxes extends PageLinesSection {
             
             $aspectRatio = $this->aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
             $post_source = $this->postSource = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
-            $post_category = ( ploption( 'FeatPicBoxes_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_category', $this->oset ) : null;
+            $post_category = ( ploption( 'FeatPicBoxes_post_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_post_category', $this->oset ) : null;
+            $page_category = ( ploption( 'FeatPicBoxes_page_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_page_category', $this->oset ) : null;
+
+            echo 'test';
+            var_dump($page_category);
             
             $class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
             
@@ -227,14 +242,11 @@ class FeatPicBoxes extends PageLinesSection {
                 $params = array( 'orderby'    => $orderby, 'order' => $order);
                 
                 $params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
-                
-                if ($post_source == 'post_cat') {
-                    $params[ 'post_type' ] = 'post';
-                    $params[ 'cat' ] = $post_category;
-                }
-                else {$params[ 'post_type' ] = $post_source;}
-                
-                if ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
+
+                $params[ 'post_type' ] = $post_source;
+                if ($post_source == 'post') { $params[ 'cat' ] = $post_category; }
+                elseif ($post_source == 'page') { $params[ 'cat' ] = $page_category; }
+                elseif ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
                 
                 $params[ 'no_found_rows' ] = 1;
 
@@ -262,7 +274,7 @@ class FeatPicBoxes extends PageLinesSection {
 
         $oset = array('post_id' => $p->ID);
         
-        if ($post_source == 'post_cat' || $post_source == 'post') {
+        if ($post_source == 'page' || $post_source == 'post') {
             if ( has_post_thumbnail( $p->ID ) ) {
                 $box_icon_array = wp_get_attachment_image_src( get_post_thumbnail_id( $p->ID ), 'single-post-thumbnail'  );
                 $box_icon = $box_icon_array[0]; // just the URL
