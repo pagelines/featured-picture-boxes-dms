@@ -258,8 +258,7 @@ class FeatPicBoxes extends PageLinesSection {
                 $params[ 'post_type' ] = $post_source;
                 if ($post_source == 'post') { $params[ 'cat' ] = $post_category; }
                 elseif ($post_source == 'page') {
-                    $params[ 'parent' ] = $page_parent;
-                    $params[ 'post__not_in' ] = array($page_parent);
+                    $params[ 'post_parent' ] = $page_parent;
                 }
                 elseif ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
                 
