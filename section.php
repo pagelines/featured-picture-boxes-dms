@@ -75,7 +75,7 @@ class FeatPicBoxes extends PageLinesSection {
                 'FeatPicBoxes_themeOptions' => array(
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
-                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divded by width
+                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divided by width
                         (the width is set by the number of boxes per row and the space you put the section in). 1 is a square, 0.5 will twice as wide as it is high (short and wide) and 2 will be twice as high as it is wide (tall and thin). You can type any number.', 'FeatPicBoxes'),
                     'shortexp'    => __('Color and theme options for the boxes', 'FeatPicBoxes'),
                     'selectvalues'    => array(

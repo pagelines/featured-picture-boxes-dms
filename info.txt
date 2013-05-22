@@ -22,7 +22,7 @@ Be sure to check out the Demo and screenshots to see the section in action.
 == Changelog ==
 = 1.0.5 =
 * Fixed second (and the main) webkit jitter on hover bug
-= 1.0.4=
+= 1.0.4 =
 * Changed titles to use h3 instead of h1 tags for SEO and to match Pagelines boxes
 = 1.0.3 =
 * Fixed webkit jitter on hover opacity bug
