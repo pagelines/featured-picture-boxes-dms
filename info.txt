@@ -18,11 +18,15 @@ Fully cloneable!
 Place it anywhere on your page!
 
 Be sure to check out the Demo and screenshots to see the section in action.
+
+= Need Help? =
+
+View the <a href="http://ryanvarley.co.uk/featured-picture-boxes/faq/">FAQ</a>. If you can't find your answer there, start a new thread on the <a href="http://www.pagelines.com/forum/forum/68-store-products/">PageLines Forum</a>
  
 == Changelog ==
 = 1.0.5 =
 * Fixed second (and the main) webkit jitter on hover bug
-= 1.0.4=
+= 1.0.4 =
 * Changed titles to use h3 instead of h1 tags for SEO and to match Pagelines boxes
 = 1.0.3 =
 * Fixed webkit jitter on hover opacity bug
