@@ -3,7 +3,7 @@
     Section: Featured Picture Boxes
     Author: Ryan Varley
     Author URI: http://ryanvarley.co.uk
-    Version: 1.0.5
+    Version: 1.1
     Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent or solid overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
@@ -31,18 +31,24 @@ class FeatPicBoxes extends PageLinesSection {
                                     'default'    => 'boxes',
                                     'type'        => 'select',
                                     'selectvalues'         => array(
-                                        'boxes'     => array('name' => __( 'Box Posts', 'FeatPicBoxes' ) ),
-                                        'post_cat'         => array('name' => __( 'Use Post Category', 'FeatPicBoxes' ) ),
-                                        'post'     => array('name' => __( 'Use all Posts', 'FeatPicBoxes' ) ),
+                                        'boxes'    => array('name' => __( 'Box Posts', 'FeatPicBoxes' ) ),
+                                        'post'     => array('name' => __( 'Posts', 'FeatPicBoxes' ) ),
+                                        'page'     => array('name' => __( 'Pages', 'FeatPicBoxes' ) ),
                                     ),
                                     'inputlabel'    => __( 'Select Feature Post Source (Optional - Defaults to boxes)', 'FeatPicBoxes' ),
                                 ),
-                            'FeatPicBoxes_category'        => array(
+                            'FeatPicBoxes_post_category'        => array(
                                     'default'        => 1,
                                     'type'            => 'select',
-                                    'selectvalues'    => $this->get_cats(),
-                                    'inputlabel'    => __( 'Select Post Category (Post category source only)', 'FeatPicBoxes' ),
+                                    'selectvalues'    => $this->get_cats('post'),
+                                    'inputlabel'    => __( 'Select Post Category (Post source only - optional)', 'FeatPicBoxes' ),
                                 ),
+                            'FeatPicBoxes_page_category'        => array(
+                                'default'        => 1,
+                                'type'            => 'select',
+                                'selectvalues'    => $this->get_page_parents('page'),
+                                'inputlabel'    => __( 'Select Page Parent (Page source only - optional)', 'FeatPicBoxes' ),
+                            ),
                         
                             'FeatPicBoxes_set' => array(
                                 'default'        => 'default-boxes',
@@ -69,7 +75,7 @@ class FeatPicBoxes extends PageLinesSection {
                 'FeatPicBoxes_themeOptions' => array(
                     'type'        => 'multi_option', 
                     'title'        => __('Box Theme Options', 'FeatPicBoxes'), 
-                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divded by width
+                    'exp'         => __('First choose your theme and hover style (more coming!). Then choose your aspect ratio which is height divided by width
                         (the width is set by the number of boxes per row and the space you put the section in). 1 is a square, 0.5 will twice as wide as it is high (short and wide) and 2 will be twice as high as it is wide (tall and thin). You can type any number.', 'FeatPicBoxes'),
                     'shortexp'    => __('Color and theme options for the boxes', 'FeatPicBoxes'),
                     'selectvalues'    => array(
@@ -187,12 +193,32 @@ class FeatPicBoxes extends PageLinesSection {
             register_metatab($tab_settings, $tab);
     }
     
-    function get_cats() {
-    
-        $cats = get_categories();
+    function get_cats($postType) {
+
+        $args = array(
+            'type' => $postType,
+        );
+
+        $cats = get_categories($args);
         foreach( $cats as $cat )
             $categories[ $cat->cat_ID ] = array( 'name' => $cat->name );
             
+        return ( isset( $categories) ) ? $categories : array();
+    }
+
+    function get_page_parents($post_type = 'page') {
+
+        $args = array(
+            'parent' => 0,
+            'post_type' => $post_type,
+            'post_status' => 'publish',
+        );
+
+        $cats = get_pages($args);
+
+        foreach( $cats as $cat )
+            $categories[ $cat->ID ] = array( 'name' => $cat->post_title );
+
         return ( isset( $categories) ) ? $categories : array();
     }
     
@@ -213,7 +239,8 @@ class FeatPicBoxes extends PageLinesSection {
             
             $aspectRatio = $this->aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
             $post_source = $this->postSource = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
-            $post_category = ( ploption( 'FeatPicBoxes_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_category', $this->oset ) : null;
+            $post_category = ( ploption( 'FeatPicBoxes_post_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_post_category', $this->oset ) : null;
+            $page_parent = ( ploption( 'FeatPicBoxes_page_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_page_category', $this->oset ) : null;
             
             $class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
             
@@ -227,14 +254,13 @@ class FeatPicBoxes extends PageLinesSection {
                 $params = array( 'orderby'    => $orderby, 'order' => $order);
                 
                 $params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
-                
-                if ($post_source == 'post_cat') {
-                    $params[ 'post_type' ] = 'post';
-                    $params[ 'cat' ] = $post_category;
+
+                $params[ 'post_type' ] = $post_source;
+                if ($post_source == 'post') { $params[ 'cat' ] = $post_category; }
+                elseif ($post_source == 'page') {
+                    $params[ 'post_parent' ] = $page_parent;
                 }
-                else {$params[ 'post_type' ] = $post_source;}
-                
-                if ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
+                elseif ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
                 
                 $params[ 'no_found_rows' ] = 1;
 
@@ -262,7 +288,7 @@ class FeatPicBoxes extends PageLinesSection {
 
         $oset = array('post_id' => $p->ID);
         
-        if ($post_source == 'post_cat' || $post_source == 'post') {
+        if ($post_source == 'page' || $post_source == 'post') {
             if ( has_post_thumbnail( $p->ID ) ) {
                 $box_icon_array = wp_get_attachment_image_src( get_post_thumbnail_id( $p->ID ), 'single-post-thumbnail'  );
                 $box_icon = $box_icon_array[0]; // just the URL
