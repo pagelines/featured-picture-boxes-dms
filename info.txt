@@ -7,7 +7,7 @@ No hover, Full covered hover or partially covered hover
 
 Shading / hover color and transparency
 
-Choose your post source (boxes, posts or a category)
+Choose your post source (boxes, posts, pages) and filter by category! (or post parent)
 
 Use a custom title by setting a 'fpb_title' custom field in posts (see <a href="http://ryanvarley.co.uk/projects/pagelines/featured-picture-boxes/using-custom-titles/">this guide</a>)
 
@@ -24,6 +24,10 @@ Be sure to check out the Demo and screenshots to see the section in action.
 View the <a href="http://ryanvarley.co.uk/featured-picture-boxes/faq/">FAQ</a>. If you can't find your answer there, start a new thread on the <a href="http://www.pagelines.com/forum/forum/68-store-products/">PageLines Forum</a>
  
 == Changelog ==
+= 1.1 =
+* PLEASE CHECK AND RESAVE YOUR ADMIN PANEL OPTIONS AFTER UPDATING
+* Added ability to use pages (filtering by page parent) as the box source
+* Changes to page options panel - Please note that you may have to reselect some admin options after this update! YOUR SECTION MAY NOT DISPLAY CORRECTLY OTHERWISE.
 = 1.0.5 =
 * Fixed second (and the main) webkit jitter on hover bug
 = 1.0.4 =
