@@ -10,6 +10,7 @@
     External:
     Demo: http://demo.ryanvarley.co.uk/featured-picture-boxes/
     Workswith: templates, main, header, morefoot, footer, sidebar1, sidebar2, sidebar_wrap
+    V3: true
 */
 
 class FeatPicBoxes extends PageLinesSection {
