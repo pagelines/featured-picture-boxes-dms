@@ -230,38 +230,38 @@ class FeatPicBoxes extends PageLinesSection {
     
 
     
-   function section_template( $clone_id = null ) {
+   function section_template() {
         
         // Options
-            $per_row = ( ploption( 'FeatPicBoxes_col_number', $this->oset) ) ? ploption( 'FeatPicBoxes_col_number', $this->oset) : 3; 
-            $box_set = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null; # TODO: test if working
-            $box_limit = ploption( 'FeatPicBoxes_items', $this->oset ); # TODO: test if working
-            $this->default_image = ( ploption( 'FeatPicBoxes_default_image', $this->oset ) ) ? ploption( 'FeatPicBoxes_default_image', $this->oset ) : $this->base_url.'/images/default-image.png';
+            $per_row = ( $this->opt( 'FeatPicBoxes_col_number', $this->oset) ) ? $this->opt( 'FeatPicBoxes_col_number', $this->oset) : 3; 
+            $box_set = ( $this->opt( 'FeatPicBoxes_set', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_set', $this->oset ) : null; # TODO: test if working
+            $box_limit = $this->opt( 'FeatPicBoxes_items', $this->oset ); # TODO: test if working
+            $this->default_image = ( $this->opt( 'FeatPicBoxes_default_image', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_default_image', $this->oset ) : $this->base_url.'/images/default-image.png';
             
-            $aspectRatio = $this->aspectRatio = ( ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? ploption( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
-            $post_source = $this->postSource = ( ploption( 'FeatPicBoxes_source', $this->oset ) ) ? ploption( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
-            $post_category = ( ploption( 'FeatPicBoxes_post_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_post_category', $this->oset ) : null;
-            $page_parent = ( ploption( 'FeatPicBoxes_page_category', $this->oset ) ) ? ploption( 'FeatPicBoxes_page_category', $this->oset ) : null;
+            $aspectRatio = $this->aspectRatio = ( $this->opt( 'FeatPicBoxes_aspectRatio', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_aspectRatio', $this->oset ) : 1;
+            $post_source = $this->postSource = ( $this->opt( 'FeatPicBoxes_source', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_source', $this->oset ) : 'boxes';
+            $post_category = ( $this->opt( 'FeatPicBoxes_post_category', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_post_category', $this->oset ) : null;
+            $page_parent = ( $this->opt( 'FeatPicBoxes_page_category', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_page_category', $this->oset ) : null;
             
-            $class = ( ploption( 'box_class', $this->oset ) ) ? ploption( 'box_class', $this->oset ) : null;
+            $class = ( $this->opt( 'box_class', $this->oset ) ) ? $this->opt( 'box_class', $this->oset ) : null;
             
             $this->parse_theme();
             
             
         // Actions    
             // Set up the query for this page
-                $orderby = ( ploption('FeatPicBoxes_orderby', $this->oset) ) ? ploption('FeatPicBoxes_orderby', $this->oset) : 'ID';
-                $order = ( ploption('FeatPicBoxes_order', $this->oset) ) ? ploption('FeatPicBoxes_order', $this->oset) : 'DESC';
+                $orderby = ( $this->opt('FeatPicBoxes_orderby', $this->oset) ) ? $this->opt('FeatPicBoxes_orderby', $this->oset) : 'ID';
+                $order = ( $this->opt('FeatPicBoxes_order', $this->oset) ) ? $this->opt('FeatPicBoxes_order', $this->oset) : 'DESC';
                 $params = array( 'orderby'    => $orderby, 'order' => $order);
                 
-                $params[ 'showposts' ] = ( ploption('FeatPicBoxes_items', $this->oset) ) ? ploption('FeatPicBoxes_items', $this->oset) : $per_row;
+                $params[ 'showposts' ] = ( $this->opt('FeatPicBoxes_items', $this->oset) ) ? $this->opt('FeatPicBoxes_items', $this->oset) : $per_row;
 
                 $params[ 'post_type' ] = $post_source;
                 if ($post_source == 'post') { $params[ 'cat' ] = $post_category; }
                 elseif ($post_source == 'page') {
                     $params[ 'post_parent' ] = $page_parent;
                 }
-                elseif ($post_source == 'boxes') { $params[ $this->taxID ] = ( ploption( 'FeatPicBoxes_set', $this->oset ) ) ? ploption( 'FeatPicBoxes_set', $this->oset ) : null;}
+                elseif ($post_source == 'boxes') { $params[ $this->taxID ] = ( $this->opt( 'FeatPicBoxes_set', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_set', $this->oset ) : null;}
                 
                 $params[ 'no_found_rows' ] = 1;
 
@@ -338,15 +338,15 @@ class FeatPicBoxes extends PageLinesSection {
     function parse_theme(){
         // from options
 
-        $this->color_overide = ( ploption( 'FeatPicBoxes_color_bg', $this->oset ) ) ? ploption( 'FeatPicBoxes_color_bg', $this->oset ) : False; // coded in draw_boxes
-        $this->text_color = ( ploption( 'FeatPicBoxes_color_text', $this->oset ) ) ? 'color:'.ploption( 'FeatPicBoxes_color_text', $this->oset ).'; ' : '';
+        $this->color_overide = ( $this->opt( 'FeatPicBoxes_color_bg', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_color_bg', $this->oset ) : False; // coded in draw_boxes
+        $this->text_color = ( $this->opt( 'FeatPicBoxes_color_text', $this->oset ) ) ? 'color:'.$this->opt( 'FeatPicBoxes_color_text', $this->oset ).'; ' : '';
         
-        $this->theme = ( ploption( 'FeatPicBoxes_theme', $this->oset ) ) ? ploption( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; 
-        //$this->border = ( ploption( 'FeatPicBoxes_border', $this->oset ) ) ? ploption( 'FeatPicBoxes_border', $this->oset ) : False;
-        $this->shadow = ( ploption( 'FeatPicBoxes_shadow', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadow', $this->oset ) : False;
-        $trans_hover = ploption( 'FeatPicBoxes_trans_hover', $this->oset) ? False : True;
-        $shading_style = ( ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) ) ? ploption( 'FeatPicBoxes_shadingHeight', $this->oset ) : 'part';
-        $custom_class = ( ploption( 'FeatPicBoxes_class', $this->oset ) ) ? ploption( 'FeatPicBoxes_class', $this->oset ) : '';
+        $this->theme = ( $this->opt( 'FeatPicBoxes_theme', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_theme', $this->oset ) : 'hover'; 
+        //$this->border = ( $this->opt( 'FeatPicBoxes_border', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_border', $this->oset ) : False;
+        $this->shadow = ( $this->opt( 'FeatPicBoxes_shadow', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_shadow', $this->oset ) : False;
+        $trans_hover = $this->opt( 'FeatPicBoxes_trans_hover', $this->oset) ? False : True;
+        $shading_style = ( $this->opt( 'FeatPicBoxes_shadingHeight', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_shadingHeight', $this->oset ) : 'part';
+        $custom_class = ( $this->opt( 'FeatPicBoxes_class', $this->oset ) ) ? $this->opt( 'FeatPicBoxes_class', $this->oset ) : '';
         // set some variables here, call functions to set others.
         
         // theme
