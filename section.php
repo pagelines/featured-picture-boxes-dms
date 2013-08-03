@@ -2,13 +2,13 @@
 /*
     Section: Featured Picture Boxes
     Author: Ryan Varley
-    Author URI: http://ryanvarley.co.uk
+    Author URI: http://acometappears.com
     Version: 1.1
     Description: Displays posts and boxes with an emphasis on the image. This can be a picture with the text on a transparent or solid overlay or the text appearing on hover.
     Class Name: FeatPicBoxes
     Cloning: true
     External:
-    Demo: http://demo.ryanvarley.co.uk/featured-picture-boxes/
+    Demo: http://fpbdemo.acometappears.com/
     Workswith: templates, main, header, morefoot, footer, sidebar1, sidebar2, sidebar_wrap
 */
 
